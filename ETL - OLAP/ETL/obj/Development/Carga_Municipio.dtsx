@@ -1,0 +1,1078 @@
+<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="5/20/2020 3:18:48 PM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="LUIZ"
+  DTS:CreatorName="LUIZ\Luiz Fernando"
+  DTS:DTSID="{38E630DC-984D-4F34-A63A-62D435988E5D}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="15.0.2000.121"
+  DTS:LocaleID="1046"
+  DTS:ObjectName="Package1"
+  DTS:PackageType="5"
+  DTS:VersionBuild="12"
+  DTS:VersionGUID="{2B2FB64B-CD0D-4305-BA00-48F44E6043F2}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[Gerenciador de Conexões do Excel]"
+      DTS:CreationName="EXCEL"
+      DTS:DTSID="{FE1327CE-61CB-45BB-9C94-8D6F1CC72C4C}"
+      DTS:ObjectName="Gerenciador de Conexões do Excel">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Provider=Microsoft.ACE.OLEDB.12.0;Data Source=C:\corona\COVID19BR.xlsx;Extended Properties=&quot;EXCEL 12.0 XML;HDR=YES&quot;;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables />
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\Tabela Municipio"
+      DTS:CreationName="STOCK:SEQUENCE"
+      DTS:Description="Contêiner da Sequência"
+      DTS:DTSID="{b9094a83-8d86-498b-bc5d-fdc0386747b8}"
+      DTS:ExecutableType="STOCK:SEQUENCE"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Tabela Municipio">
+      <DTS:Variables />
+      <DTS:Executables>
+        <DTS:Executable
+          DTS:refId="Package\Tabela Municipio\Carga Tabela Dimensao municipio"
+          DTS:CreationName="Microsoft.Pipeline"
+          DTS:Description="Tarefa Fluxo de Dados"
+          DTS:DTSID="{8a37bf84-d8b0-4169-92f7-62c3e1a0233b}"
+          DTS:ExecutableType="Microsoft.Pipeline"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="Carga Tabela Dimensao municipio"
+          DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <pipeline
+              version="1">
+              <components>
+                <component
+                  refId="Package\Tabela Municipio\Carga Tabela Dimensao municipio\Dimensao Estado"
+                  componentClassID="Microsoft.OLEDBDestination"
+                  contactInfo="Destino OLE DB;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; Todos os Direitos Reservados; http://www.microsoft.com/sql/support;4"
+                  description="Destino OLE DB"
+                  name="Dimensao Estado"
+                  usesDispositions="true"
+                  version="4">
+                  <properties>
+                    <property
+                      dataType="System.Int32"
+                      description="O tempo em segundos antes que um comando expire. Zero indica uma expiração infinita."
+                      name="CommandTimeout">0</property>
+                    <property
+                      dataType="System.String"
+                      description="Especifica o nome do objeto de banco de dados usado para abrir um conjunto de linhas."
+                      name="OpenRowset">[Dimensao].[Municipio]</property>
+                    <property
+                      dataType="System.String"
+                      description="Especifica a variável que contém o nome do objeto de banco de dados usado para abrir um conjunto de linhas."
+                      name="OpenRowsetVariable"></property>
+                    <property
+                      dataType="System.String"
+                      description="O comando SQL a ser executado."
+                      name="SqlCommand"
+                      UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">SELECT [IDEstado]
+      ,[Estado]
+FROM [DW_COVID].[Dimensao].[Estado]
+where not exists (
+select IDEstado,Estado
+from [DW_COVID].[Stage].[Estado]
+)</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Especifica a página de código de coluna a ser usada quando não há informações de página de código disponíveis a partir da fonte de dados."
+                      name="DefaultCodePage">1252</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Forca o uso do valor da propriedade DefaultCodePage durante a descrição dos dados de caractere."
+                      name="AlwaysUseDefaultCodePage">false</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Especifica o modo usado para acessar o banco de dados."
+                      name="AccessMode"
+                      typeConverter="AccessMode">0</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Indica se os valores fornecidos para colunas de identidade serão copiados no destino. Se false, os valores para colunas de identidade serão gerados automaticamente no destino. Aplicável apenas se o carregamento rápido estiver ativado."
+                      name="FastLoadKeepIdentity">false</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Indica se as colunas que contêm null terão null inserido no destino. Se false, as colunas que contêm null terão seus valores padrão inseridos no destino. Aplicável apenas se o carregamento rápido estiver ativado."
+                      name="FastLoadKeepNulls">false</property>
+                    <property
+                      dataType="System.String"
+                      description="Especifica as opções a serem usadas com o carregamento rápido. Aplicável apenas se o carregamento rápido estiver ativado."
+                      name="FastLoadOptions"></property>
+                    <property
+                      dataType="System.Int32"
+                      description="Especifica quando confirmações são emitidas durante a inserção de dados. Um valor de 0 especifica que uma confirmação será emitida ao final da inserção de dados. Aplicável somente se o carregamento rápido estiver ativado."
+                      name="FastLoadMaxInsertCommitSize">2147483647</property>
+                  </properties>
+                  <connections>
+                    <connection
+                      refId="Package\Tabela Municipio\Carga Tabela Dimensao municipio\Dimensao Estado.Connections[OleDbConnection]"
+                      connectionManagerID="{C04BDECC-6CF8-46CE-BB23-D9D8A000D69C}:external"
+                      connectionManagerRefId="Project.ConnectionManagers[DW_COVID]"
+                      description="A conexão de tempo de execução OLE DB usada para acessar o banco de dados."
+                      name="OleDbConnection" />
+                  </connections>
+                  <inputs>
+                    <input
+                      refId="Package\Tabela Municipio\Carga Tabela Dimensao municipio\Dimensao Estado.Inputs[Entrada de Destino OLE DB]"
+                      errorOrTruncationOperation="Inserir"
+                      errorRowDisposition="FailComponent"
+                      hasSideEffects="true"
+                      name="Entrada de Destino OLE DB">
+                      <inputColumns>
+                        <inputColumn
+                          refId="Package\Tabela Municipio\Carga Tabela Dimensao municipio\Dimensao Estado.Inputs[Entrada de Destino OLE DB].Columns[IDMunicipio]"
+                          cachedDataType="i4"
+                          cachedName="IDMunicipio"
+                          externalMetadataColumnId="Package\Tabela Municipio\Carga Tabela Dimensao municipio\Dimensao Estado.Inputs[Entrada de Destino OLE DB].ExternalColumns[IDMunicipio]"
+                          lineageId="Package\Tabela Municipio\Carga Tabela Dimensao municipio\Stage Municipio.Outputs[Saída de Origem OLE DB].Columns[IDMunicipio]" />
+                        <inputColumn
+                          refId="Package\Tabela Municipio\Carga Tabela Dimensao municipio\Dimensao Estado.Inputs[Entrada de Destino OLE DB].Columns[Municipio]"
+                          cachedDataType="wstr"
+                          cachedLength="50"
+                          cachedName="Municipio"
+                          externalMetadataColumnId="Package\Tabela Municipio\Carga Tabela Dimensao municipio\Dimensao Estado.Inputs[Entrada de Destino OLE DB].ExternalColumns[Municipio]"
+                          lineageId="Package\Tabela Municipio\Carga Tabela Dimensao municipio\Stage Municipio.Outputs[Saída de Origem OLE DB].Columns[Municipio]" />
+                      </inputColumns>
+                      <externalMetadataColumns
+                        isUsed="True">
+                        <externalMetadataColumn
+                          refId="Package\Tabela Municipio\Carga Tabela Dimensao municipio\Dimensao Estado.Inputs[Entrada de Destino OLE DB].ExternalColumns[IDMunicipio]"
+                          dataType="i4"
+                          name="IDMunicipio" />
+                        <externalMetadataColumn
+                          refId="Package\Tabela Municipio\Carga Tabela Dimensao municipio\Dimensao Estado.Inputs[Entrada de Destino OLE DB].ExternalColumns[Municipio]"
+                          dataType="wstr"
+                          length="50"
+                          name="Municipio" />
+                      </externalMetadataColumns>
+                    </input>
+                  </inputs>
+                  <outputs>
+                    <output
+                      refId="Package\Tabela Municipio\Carga Tabela Dimensao municipio\Dimensao Estado.Outputs[Saída de Erro de Destino OLE DB]"
+                      exclusionGroup="1"
+                      isErrorOut="true"
+                      name="Saída de Erro de Destino OLE DB"
+                      synchronousInputId="Package\Tabela Municipio\Carga Tabela Dimensao municipio\Dimensao Estado.Inputs[Entrada de Destino OLE DB]">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\Tabela Municipio\Carga Tabela Dimensao municipio\Dimensao Estado.Outputs[Saída de Erro de Destino OLE DB].Columns[ErrorCode]"
+                          dataType="i4"
+                          lineageId="Package\Tabela Municipio\Carga Tabela Dimensao municipio\Dimensao Estado.Outputs[Saída de Erro de Destino OLE DB].Columns[ErrorCode]"
+                          name="ErrorCode"
+                          specialFlags="1" />
+                        <outputColumn
+                          refId="Package\Tabela Municipio\Carga Tabela Dimensao municipio\Dimensao Estado.Outputs[Saída de Erro de Destino OLE DB].Columns[ErrorColumn]"
+                          dataType="i4"
+                          lineageId="Package\Tabela Municipio\Carga Tabela Dimensao municipio\Dimensao Estado.Outputs[Saída de Erro de Destino OLE DB].Columns[ErrorColumn]"
+                          name="ErrorColumn"
+                          specialFlags="2" />
+                      </outputColumns>
+                      <externalMetadataColumns />
+                    </output>
+                  </outputs>
+                </component>
+                <component
+                  refId="Package\Tabela Municipio\Carga Tabela Dimensao municipio\Stage Municipio"
+                  componentClassID="Microsoft.OLEDBSource"
+                  contactInfo="Origem OLE DB;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; Todos os Direitos Reservados; http://www.microsoft.com/sql/support;7"
+                  description="Origem OLE DB"
+                  name="Stage Municipio"
+                  usesDispositions="true"
+                  version="7">
+                  <properties>
+                    <property
+                      dataType="System.Int32"
+                      description="O tempo em segundos antes que um comando expire. Zero indica uma expiração infinita."
+                      name="CommandTimeout">0</property>
+                    <property
+                      dataType="System.String"
+                      description="Especifica o nome do objeto de banco de dados usado para abrir um conjunto de linhas."
+                      name="OpenRowset">[Stage].[Estado]</property>
+                    <property
+                      dataType="System.String"
+                      description="Especifica a variável que contém o nome do objeto de banco de dados usado para abrir um conjunto de linhas."
+                      name="OpenRowsetVariable"></property>
+                    <property
+                      dataType="System.String"
+                      description="O comando SQL a ser executado."
+                      name="SqlCommand"
+                      UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">Select [IDMunicipio], [Municipio]
+from [DW_COVID].[Stage].[Municipio]
+where IDmunicipio is not null
+and Municipio is not null
+and idmunicipio not in(
+SELECT [IDMunicipio]
+  FROM [DW_COVID].[Dimensao].[Municipio]
+)</property>
+                    <property
+                      dataType="System.String"
+                      description="A variável que contém o comando SQL a ser executado."
+                      name="SqlCommandVariable"></property>
+                    <property
+                      dataType="System.Int32"
+                      description="Especifica a página de código de coluna a ser usada quando não há informações de página de código disponíveis a partir da fonte de dados."
+                      name="DefaultCodePage">1252</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Forca o uso do valor da propriedade DefaultCodePage durante a descrição dos dados de caractere."
+                      name="AlwaysUseDefaultCodePage">false</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Especifica o modo usado para acessar o banco de dados."
+                      name="AccessMode"
+                      typeConverter="AccessMode">2</property>
+                    <property
+                      dataType="System.String"
+                      description="Os mapeamentos entre os parâmetros no comando SQL e as variáveis."
+                      name="ParameterMapping"></property>
+                  </properties>
+                  <connections>
+                    <connection
+                      refId="Package\Tabela Municipio\Carga Tabela Dimensao municipio\Stage Municipio.Connections[OleDbConnection]"
+                      connectionManagerID="{C04BDECC-6CF8-46CE-BB23-D9D8A000D69C}:external"
+                      connectionManagerRefId="Project.ConnectionManagers[DW_COVID]"
+                      description="A conexão de tempo de execução OLE DB usada para acessar o banco de dados."
+                      name="OleDbConnection" />
+                  </connections>
+                  <outputs>
+                    <output
+                      refId="Package\Tabela Municipio\Carga Tabela Dimensao municipio\Stage Municipio.Outputs[Saída de Origem OLE DB]"
+                      name="Saída de Origem OLE DB">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\Tabela Municipio\Carga Tabela Dimensao municipio\Stage Municipio.Outputs[Saída de Origem OLE DB].Columns[IDMunicipio]"
+                          dataType="i4"
+                          errorOrTruncationOperation="Conversão"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Tabela Municipio\Carga Tabela Dimensao municipio\Stage Municipio.Outputs[Saída de Origem OLE DB].ExternalColumns[IDMunicipio]"
+                          lineageId="Package\Tabela Municipio\Carga Tabela Dimensao municipio\Stage Municipio.Outputs[Saída de Origem OLE DB].Columns[IDMunicipio]"
+                          name="IDMunicipio"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\Tabela Municipio\Carga Tabela Dimensao municipio\Stage Municipio.Outputs[Saída de Origem OLE DB].Columns[Municipio]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="Conversão"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Tabela Municipio\Carga Tabela Dimensao municipio\Stage Municipio.Outputs[Saída de Origem OLE DB].ExternalColumns[Municipio]"
+                          length="50"
+                          lineageId="Package\Tabela Municipio\Carga Tabela Dimensao municipio\Stage Municipio.Outputs[Saída de Origem OLE DB].Columns[Municipio]"
+                          name="Municipio"
+                          truncationRowDisposition="FailComponent" />
+                      </outputColumns>
+                      <externalMetadataColumns
+                        isUsed="True">
+                        <externalMetadataColumn
+                          refId="Package\Tabela Municipio\Carga Tabela Dimensao municipio\Stage Municipio.Outputs[Saída de Origem OLE DB].ExternalColumns[IDMunicipio]"
+                          dataType="i4"
+                          name="IDMunicipio" />
+                        <externalMetadataColumn
+                          refId="Package\Tabela Municipio\Carga Tabela Dimensao municipio\Stage Municipio.Outputs[Saída de Origem OLE DB].ExternalColumns[Municipio]"
+                          dataType="wstr"
+                          length="50"
+                          name="Municipio" />
+                      </externalMetadataColumns>
+                    </output>
+                    <output
+                      refId="Package\Tabela Municipio\Carga Tabela Dimensao municipio\Stage Municipio.Outputs[Saída de Erro de Origem OLE DB]"
+                      isErrorOut="true"
+                      name="Saída de Erro de Origem OLE DB">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\Tabela Municipio\Carga Tabela Dimensao municipio\Stage Municipio.Outputs[Saída de Erro de Origem OLE DB].Columns[IDMunicipio]"
+                          dataType="i4"
+                          lineageId="Package\Tabela Municipio\Carga Tabela Dimensao municipio\Stage Municipio.Outputs[Saída de Erro de Origem OLE DB].Columns[IDMunicipio]"
+                          name="IDMunicipio" />
+                        <outputColumn
+                          refId="Package\Tabela Municipio\Carga Tabela Dimensao municipio\Stage Municipio.Outputs[Saída de Erro de Origem OLE DB].Columns[Municipio]"
+                          dataType="wstr"
+                          length="50"
+                          lineageId="Package\Tabela Municipio\Carga Tabela Dimensao municipio\Stage Municipio.Outputs[Saída de Erro de Origem OLE DB].Columns[Municipio]"
+                          name="Municipio" />
+                        <outputColumn
+                          refId="Package\Tabela Municipio\Carga Tabela Dimensao municipio\Stage Municipio.Outputs[Saída de Erro de Origem OLE DB].Columns[ErrorCode]"
+                          dataType="i4"
+                          lineageId="Package\Tabela Municipio\Carga Tabela Dimensao municipio\Stage Municipio.Outputs[Saída de Erro de Origem OLE DB].Columns[ErrorCode]"
+                          name="ErrorCode"
+                          specialFlags="1" />
+                        <outputColumn
+                          refId="Package\Tabela Municipio\Carga Tabela Dimensao municipio\Stage Municipio.Outputs[Saída de Erro de Origem OLE DB].Columns[ErrorColumn]"
+                          dataType="i4"
+                          lineageId="Package\Tabela Municipio\Carga Tabela Dimensao municipio\Stage Municipio.Outputs[Saída de Erro de Origem OLE DB].Columns[ErrorColumn]"
+                          name="ErrorColumn"
+                          specialFlags="2" />
+                      </outputColumns>
+                      <externalMetadataColumns />
+                    </output>
+                  </outputs>
+                </component>
+              </components>
+              <paths>
+                <path
+                  refId="Package\Tabela Municipio\Carga Tabela Dimensao municipio.Paths[Saída de Origem OLE DB]"
+                  endId="Package\Tabela Municipio\Carga Tabela Dimensao municipio\Dimensao Estado.Inputs[Entrada de Destino OLE DB]"
+                  name="Saída de Origem OLE DB"
+                  startId="Package\Tabela Municipio\Carga Tabela Dimensao municipio\Stage Municipio.Outputs[Saída de Origem OLE DB]" />
+              </paths>
+            </pipeline>
+          </DTS:ObjectData>
+        </DTS:Executable>
+        <DTS:Executable
+          DTS:refId="Package\Tabela Municipio\Carga Tabela Stage Municipio"
+          DTS:CreationName="Microsoft.Pipeline"
+          DTS:Description="Tarefa Fluxo de Dados"
+          DTS:DTSID="{6ad111a8-70b9-46e2-9376-cfe6727a23d8}"
+          DTS:ExecutableType="Microsoft.Pipeline"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="Carga Tabela Stage Municipio"
+          DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <pipeline
+              version="1">
+              <components>
+                <component
+                  refId="Package\Tabela Municipio\Carga Tabela Stage Municipio\Agregação"
+                  componentClassID="Microsoft.Aggregate"
+                  contactInfo="Agregação;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; Todos os Direitos Reservados; http://www.microsoft.com/sql/support;3"
+                  description="Dados de agregações com funções como Average, Sum, Count, Max e Min. Por exemplo, agrupe dados para computar a soma das vendas por produto ou a média de visitas por dia."
+                  name="Agregação"
+                  version="3">
+                  <properties>
+                    <property
+                      dataType="System.Int32"
+                      description="Especifica o número aproximado de chaves de agrupar por produzidas pela agregação. Um número Baixo indica valores de 500.000 chaves. Médio indica 5 valores de 5 milhões de chaves e Alto indica mais de 25 milhões de valores de chaves. Não especificado indica que nenhum valor de KeyScale foi usado."
+                      name="KeyScale"
+                      typeConverter="KeyScaleType">0</property>
+                    <property
+                      dataType="System.Null"
+                      description="Especifica o número exato de chaves de agrupar por produzidas pela agregação. Se um valor de KeyScale for especificado, o valor em Keys terá precedência."
+                      name="Keys" />
+                    <property
+                      dataType="System.Int32"
+                      description="Especifica o número aproximado de valores distintos em uma coluna que a agregação conta de modo distinto. Baixo indica 500.000 valores de chave, Médio indica 5 milhões de valores de chave e Alto indica mais de 25 milhões de valores de chave. Não especificado indica que nenhum valor de CountDistinctScale foi usado."
+                      name="CountDistinctScale"
+                      typeConverter="KeyScaleType">0</property>
+                    <property
+                      dataType="System.Null"
+                      description="Especifica o número exato de valores distintos de uma coluna que a agregação conta de modo distinto. Se um valor de CountDistinctScale for especificado, o valor em CountDistinctKeys terá precedência."
+                      name="CountDistinctKeys" />
+                    <property
+                      dataType="System.Int32"
+                      description="Especifica a porcentagem pela qual a memória pode ser estendida durante a agregação. Os valores válidos ficam entre 1 e 100."
+                      name="AutoExtendFactor">25</property>
+                  </properties>
+                  <inputs>
+                    <input
+                      refId="Package\Tabela Municipio\Carga Tabela Stage Municipio\Agregação.Inputs[Entrada de Agregação 1]"
+                      name="Entrada de Agregação 1">
+                      <inputColumns>
+                        <inputColumn
+                          refId="Package\Tabela Municipio\Carga Tabela Stage Municipio\Agregação.Inputs[Entrada de Agregação 1].Columns[codmun]"
+                          cachedDataType="wstr"
+                          cachedLength="255"
+                          cachedName="codmun"
+                          lineageId="Package\Tabela Municipio\Carga Tabela Stage Municipio\COVID19BR.Outputs[Saída de Origem do Excel].Columns[codmun]" />
+                        <inputColumn
+                          refId="Package\Tabela Municipio\Carga Tabela Stage Municipio\Agregação.Inputs[Entrada de Agregação 1].Columns[municipio]"
+                          cachedDataType="wstr"
+                          cachedLength="255"
+                          cachedName="municipio"
+                          lineageId="Package\Tabela Municipio\Carga Tabela Stage Municipio\COVID19BR.Outputs[Saída de Origem do Excel].Columns[municipio]" />
+                      </inputColumns>
+                      <externalMetadataColumns />
+                    </input>
+                  </inputs>
+                  <outputs>
+                    <output
+                      refId="Package\Tabela Municipio\Carga Tabela Stage Municipio\Agregação.Outputs[Saída de Agregação 1]"
+                      name="Saída de Agregação 1">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Especifica o número aproximado de chaves de agrupar por produzidas pela agregação. Um número Baixo indica valores de 500.000 chaves. Médio indica 5 valores de 5 milhões de chaves e Alto indica mais de 25 milhões de valores de chaves. Não especificado indica que nenhum valor de KeyScale foi usado."
+                          name="KeyScale"
+                          typeConverter="KeyScaleType">0</property>
+                        <property
+                          dataType="System.Null"
+                          description="Especifica o número exato de chaves de agrupar por produzidas pela agregação. Se um valor de KeyScale for especificado, o valor em Keys terá precedência."
+                          name="Keys" />
+                      </properties>
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\Tabela Municipio\Carga Tabela Stage Municipio\Agregação.Outputs[Saída de Agregação 1].Columns[codmun]"
+                          dataType="wstr"
+                          length="255"
+                          lineageId="Package\Tabela Municipio\Carga Tabela Stage Municipio\Agregação.Outputs[Saída de Agregação 1].Columns[codmun]"
+                          name="codmun">
+                          <properties>
+                            <property
+                              containsID="true"
+                              dataType="System.Int32"
+                              description="Especifica a identificação da coluna de entrada usada na agregação."
+                              name="AggregationColumnId">#{Package\Tabela Municipio\Carga Tabela Stage Municipio\COVID19BR.Outputs[Saída de Origem do Excel].Columns[codmun]}</property>
+                            <property
+                              dataType="System.Int32"
+                              description="Especifica o tipo de agregação."
+                              name="AggregationType"
+                              typeConverter="AggregationType">0</property>
+                            <property
+                              dataType="System.Int32"
+                              description="Indica se a coluna requer tratamento especial porque pode conter dados superdimensionados ou exigir precisão superior a de um tipo de dados flutuante."
+                              name="IsBig">1</property>
+                            <property
+                              dataType="System.Int32"
+                              description="Especifica as opções de comparação da cadeia de caracteres."
+                              name="AggregationComparisonFlags">0</property>
+                          </properties>
+                        </outputColumn>
+                        <outputColumn
+                          refId="Package\Tabela Municipio\Carga Tabela Stage Municipio\Agregação.Outputs[Saída de Agregação 1].Columns[municipio]"
+                          dataType="wstr"
+                          length="255"
+                          lineageId="Package\Tabela Municipio\Carga Tabela Stage Municipio\Agregação.Outputs[Saída de Agregação 1].Columns[municipio]"
+                          name="municipio">
+                          <properties>
+                            <property
+                              containsID="true"
+                              dataType="System.Int32"
+                              description="Especifica a identificação da coluna de entrada usada na agregação."
+                              name="AggregationColumnId">#{Package\Tabela Municipio\Carga Tabela Stage Municipio\COVID19BR.Outputs[Saída de Origem do Excel].Columns[municipio]}</property>
+                            <property
+                              dataType="System.Int32"
+                              description="Especifica o tipo de agregação."
+                              name="AggregationType"
+                              typeConverter="AggregationType">0</property>
+                            <property
+                              dataType="System.Int32"
+                              description="Indica se a coluna requer tratamento especial porque pode conter dados superdimensionados ou exigir precisão superior a de um tipo de dados flutuante."
+                              name="IsBig">1</property>
+                            <property
+                              dataType="System.Int32"
+                              description="Especifica as opções de comparação da cadeia de caracteres."
+                              name="AggregationComparisonFlags">0</property>
+                          </properties>
+                        </outputColumn>
+                      </outputColumns>
+                      <externalMetadataColumns />
+                    </output>
+                  </outputs>
+                </component>
+                <component
+                  refId="Package\Tabela Municipio\Carga Tabela Stage Municipio\COVID19BR"
+                  componentClassID="Microsoft.ExcelSource"
+                  contactInfo="Origem do Excel;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; Todos os Direitos Reservados; http://www.microsoft.com/sql/support;1"
+                  description="Origem do Excel"
+                  name="COVID19BR"
+                  usesDispositions="true"
+                  version="1">
+                  <properties>
+                    <property
+                      dataType="System.Int32"
+                      description="O tempo em segundos antes que um comando expire. Zero indica uma expiração infinita."
+                      name="CommandTimeout">0</property>
+                    <property
+                      dataType="System.String"
+                      description="Especifica o nome do objeto de banco de dados usado para abrir um conjunto de linhas."
+                      name="OpenRowset">'Sheet 1$'</property>
+                    <property
+                      dataType="System.String"
+                      description="Especifica a variável que contém o nome do objeto de banco de dados usado para abrir um conjunto de linhas."
+                      name="OpenRowsetVariable"></property>
+                    <property
+                      dataType="System.String"
+                      description="O comando SQL a ser executado."
+                      name="SqlCommand"
+                      UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                    <property
+                      dataType="System.String"
+                      description="A variável que contém o comando SQL a ser executado."
+                      name="SqlCommandVariable"></property>
+                    <property
+                      dataType="System.Int32"
+                      description="Especifica o modo usado para acessar o banco de dados."
+                      name="AccessMode"
+                      typeConverter="AccessMode">0</property>
+                    <property
+                      dataType="System.String"
+                      description="O mapeamento de parâmetros no comando SQL para variáveis."
+                      name="ParameterMapping"></property>
+                  </properties>
+                  <connections>
+                    <connection
+                      refId="Package\Tabela Municipio\Carga Tabela Stage Municipio\COVID19BR.Connections[OleDbConnection]"
+                      connectionManagerID="Package.ConnectionManagers[Gerenciador de Conexões do Excel]"
+                      connectionManagerRefId="Package.ConnectionManagers[Gerenciador de Conexões do Excel]"
+                      description="A conexão de tempo de execução OLE DB usada para acessar o banco de dados."
+                      name="OleDbConnection" />
+                  </connections>
+                  <outputs>
+                    <output
+                      refId="Package\Tabela Municipio\Carga Tabela Stage Municipio\COVID19BR.Outputs[Saída de Origem do Excel]"
+                      name="Saída de Origem do Excel">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\Tabela Municipio\Carga Tabela Stage Municipio\COVID19BR.Outputs[Saída de Origem do Excel].Columns[codmun]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="Conversão"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Tabela Municipio\Carga Tabela Stage Municipio\COVID19BR.Outputs[Saída de Origem do Excel].ExternalColumns[codmun]"
+                          length="255"
+                          lineageId="Package\Tabela Municipio\Carga Tabela Stage Municipio\COVID19BR.Outputs[Saída de Origem do Excel].Columns[codmun]"
+                          name="codmun"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\Tabela Municipio\Carga Tabela Stage Municipio\COVID19BR.Outputs[Saída de Origem do Excel].Columns[municipio]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="Conversão"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Tabela Municipio\Carga Tabela Stage Municipio\COVID19BR.Outputs[Saída de Origem do Excel].ExternalColumns[municipio]"
+                          length="255"
+                          lineageId="Package\Tabela Municipio\Carga Tabela Stage Municipio\COVID19BR.Outputs[Saída de Origem do Excel].Columns[municipio]"
+                          name="municipio"
+                          truncationRowDisposition="FailComponent" />
+                      </outputColumns>
+                      <externalMetadataColumns
+                        isUsed="True">
+                        <externalMetadataColumn
+                          refId="Package\Tabela Municipio\Carga Tabela Stage Municipio\COVID19BR.Outputs[Saída de Origem do Excel].ExternalColumns[regiao]"
+                          dataType="wstr"
+                          length="255"
+                          name="regiao" />
+                        <externalMetadataColumn
+                          refId="Package\Tabela Municipio\Carga Tabela Stage Municipio\COVID19BR.Outputs[Saída de Origem do Excel].ExternalColumns[estado]"
+                          dataType="wstr"
+                          length="255"
+                          name="estado" />
+                        <externalMetadataColumn
+                          refId="Package\Tabela Municipio\Carga Tabela Stage Municipio\COVID19BR.Outputs[Saída de Origem do Excel].ExternalColumns[municipio]"
+                          dataType="wstr"
+                          length="255"
+                          name="municipio" />
+                        <externalMetadataColumn
+                          refId="Package\Tabela Municipio\Carga Tabela Stage Municipio\COVID19BR.Outputs[Saída de Origem do Excel].ExternalColumns[coduf]"
+                          dataType="wstr"
+                          length="255"
+                          name="coduf" />
+                        <externalMetadataColumn
+                          refId="Package\Tabela Municipio\Carga Tabela Stage Municipio\COVID19BR.Outputs[Saída de Origem do Excel].ExternalColumns[codmun]"
+                          dataType="wstr"
+                          length="255"
+                          name="codmun" />
+                        <externalMetadataColumn
+                          refId="Package\Tabela Municipio\Carga Tabela Stage Municipio\COVID19BR.Outputs[Saída de Origem do Excel].ExternalColumns[codRegiaoSaude]"
+                          dataType="wstr"
+                          length="255"
+                          name="codRegiaoSaude" />
+                        <externalMetadataColumn
+                          refId="Package\Tabela Municipio\Carga Tabela Stage Municipio\COVID19BR.Outputs[Saída de Origem do Excel].ExternalColumns[nomeRegiaoSaude]"
+                          dataType="wstr"
+                          length="255"
+                          name="nomeRegiaoSaude" />
+                        <externalMetadataColumn
+                          refId="Package\Tabela Municipio\Carga Tabela Stage Municipio\COVID19BR.Outputs[Saída de Origem do Excel].ExternalColumns[data]"
+                          dataType="wstr"
+                          length="255"
+                          name="data" />
+                        <externalMetadataColumn
+                          refId="Package\Tabela Municipio\Carga Tabela Stage Municipio\COVID19BR.Outputs[Saída de Origem do Excel].ExternalColumns[semanaEpi]"
+                          dataType="wstr"
+                          length="255"
+                          name="semanaEpi" />
+                        <externalMetadataColumn
+                          refId="Package\Tabela Municipio\Carga Tabela Stage Municipio\COVID19BR.Outputs[Saída de Origem do Excel].ExternalColumns[populacaoTCU2019]"
+                          dataType="wstr"
+                          length="255"
+                          name="populacaoTCU2019" />
+                        <externalMetadataColumn
+                          refId="Package\Tabela Municipio\Carga Tabela Stage Municipio\COVID19BR.Outputs[Saída de Origem do Excel].ExternalColumns[casosAcumulado]"
+                          dataType="wstr"
+                          length="255"
+                          name="casosAcumulado" />
+                        <externalMetadataColumn
+                          refId="Package\Tabela Municipio\Carga Tabela Stage Municipio\COVID19BR.Outputs[Saída de Origem do Excel].ExternalColumns[obitosAcumulado]"
+                          dataType="wstr"
+                          length="255"
+                          name="obitosAcumulado" />
+                        <externalMetadataColumn
+                          refId="Package\Tabela Municipio\Carga Tabela Stage Municipio\COVID19BR.Outputs[Saída de Origem do Excel].ExternalColumns[Recuperadosnovos]"
+                          dataType="wstr"
+                          length="255"
+                          name="Recuperadosnovos" />
+                        <externalMetadataColumn
+                          refId="Package\Tabela Municipio\Carga Tabela Stage Municipio\COVID19BR.Outputs[Saída de Origem do Excel].ExternalColumns[emAcompanhamentoNovos]"
+                          dataType="wstr"
+                          length="255"
+                          name="emAcompanhamentoNovos" />
+                        <externalMetadataColumn
+                          refId="Package\Tabela Municipio\Carga Tabela Stage Municipio\COVID19BR.Outputs[Saída de Origem do Excel].ExternalColumns[casosNovos]"
+                          dataType="wstr"
+                          length="255"
+                          name="casosNovos" />
+                        <externalMetadataColumn
+                          refId="Package\Tabela Municipio\Carga Tabela Stage Municipio\COVID19BR.Outputs[Saída de Origem do Excel].ExternalColumns[obitosNovos]"
+                          dataType="wstr"
+                          length="255"
+                          name="obitosNovos" />
+                      </externalMetadataColumns>
+                    </output>
+                    <output
+                      refId="Package\Tabela Municipio\Carga Tabela Stage Municipio\COVID19BR.Outputs[Saída de Erro de Origem do Excel]"
+                      isErrorOut="true"
+                      name="Saída de Erro de Origem do Excel">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\Tabela Municipio\Carga Tabela Stage Municipio\COVID19BR.Outputs[Saída de Erro de Origem do Excel].Columns[ErrorCode]"
+                          dataType="i4"
+                          lineageId="Package\Tabela Municipio\Carga Tabela Stage Municipio\COVID19BR.Outputs[Saída de Erro de Origem do Excel].Columns[ErrorCode]"
+                          name="ErrorCode"
+                          specialFlags="1" />
+                        <outputColumn
+                          refId="Package\Tabela Municipio\Carga Tabela Stage Municipio\COVID19BR.Outputs[Saída de Erro de Origem do Excel].Columns[ErrorColumn]"
+                          dataType="i4"
+                          lineageId="Package\Tabela Municipio\Carga Tabela Stage Municipio\COVID19BR.Outputs[Saída de Erro de Origem do Excel].Columns[ErrorColumn]"
+                          name="ErrorColumn"
+                          specialFlags="2" />
+                        <outputColumn
+                          refId="Package\Tabela Municipio\Carga Tabela Stage Municipio\COVID19BR.Outputs[Saída de Erro de Origem do Excel].Columns[codmun]"
+                          dataType="wstr"
+                          length="255"
+                          lineageId="Package\Tabela Municipio\Carga Tabela Stage Municipio\COVID19BR.Outputs[Saída de Erro de Origem do Excel].Columns[codmun]"
+                          name="codmun" />
+                        <outputColumn
+                          refId="Package\Tabela Municipio\Carga Tabela Stage Municipio\COVID19BR.Outputs[Saída de Erro de Origem do Excel].Columns[municipio]"
+                          dataType="wstr"
+                          length="255"
+                          lineageId="Package\Tabela Municipio\Carga Tabela Stage Municipio\COVID19BR.Outputs[Saída de Erro de Origem do Excel].Columns[municipio]"
+                          name="municipio" />
+                      </outputColumns>
+                      <externalMetadataColumns />
+                    </output>
+                  </outputs>
+                </component>
+                <component
+                  refId="Package\Tabela Municipio\Carga Tabela Stage Municipio\Stage Municipio"
+                  componentClassID="Microsoft.OLEDBDestination"
+                  contactInfo="Destino OLE DB;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; Todos os Direitos Reservados; http://www.microsoft.com/sql/support;4"
+                  description="Destino OLE DB"
+                  name="Stage Municipio"
+                  usesDispositions="true"
+                  version="4">
+                  <properties>
+                    <property
+                      dataType="System.Int32"
+                      description="O tempo em segundos antes que um comando expire. Zero indica uma expiração infinita."
+                      name="CommandTimeout">0</property>
+                    <property
+                      dataType="System.String"
+                      description="Especifica o nome do objeto de banco de dados usado para abrir um conjunto de linhas."
+                      name="OpenRowset">[Stage].[Municipio]</property>
+                    <property
+                      dataType="System.String"
+                      description="Especifica a variável que contém o nome do objeto de banco de dados usado para abrir um conjunto de linhas."
+                      name="OpenRowsetVariable"></property>
+                    <property
+                      dataType="System.String"
+                      description="O comando SQL a ser executado."
+                      name="SqlCommand"
+                      UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">SELECT [IDEstado]
+      ,ISNULL([Estado],'BR') as Estado
+  FROM [DW_COVID].[Stage].[Estado]
+where IDEstado is not null</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Especifica a página de código de coluna a ser usada quando não há informações de página de código disponíveis a partir da fonte de dados."
+                      name="DefaultCodePage">1252</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Forca o uso do valor da propriedade DefaultCodePage durante a descrição dos dados de caractere."
+                      name="AlwaysUseDefaultCodePage">false</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Especifica o modo usado para acessar o banco de dados."
+                      name="AccessMode"
+                      typeConverter="AccessMode">0</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Indica se os valores fornecidos para colunas de identidade serão copiados no destino. Se false, os valores para colunas de identidade serão gerados automaticamente no destino. Aplicável apenas se o carregamento rápido estiver ativado."
+                      name="FastLoadKeepIdentity">false</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Indica se as colunas que contêm null terão null inserido no destino. Se false, as colunas que contêm null terão seus valores padrão inseridos no destino. Aplicável apenas se o carregamento rápido estiver ativado."
+                      name="FastLoadKeepNulls">false</property>
+                    <property
+                      dataType="System.String"
+                      description="Especifica as opções a serem usadas com o carregamento rápido. Aplicável apenas se o carregamento rápido estiver ativado."
+                      name="FastLoadOptions">TABLOCK,CHECK_CONSTRAINTS</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Especifica quando confirmações são emitidas durante a inserção de dados. Um valor de 0 especifica que uma confirmação será emitida ao final da inserção de dados. Aplicável somente se o carregamento rápido estiver ativado."
+                      name="FastLoadMaxInsertCommitSize">2147483647</property>
+                  </properties>
+                  <connections>
+                    <connection
+                      refId="Package\Tabela Municipio\Carga Tabela Stage Municipio\Stage Municipio.Connections[OleDbConnection]"
+                      connectionManagerID="{C04BDECC-6CF8-46CE-BB23-D9D8A000D69C}:external"
+                      connectionManagerRefId="Project.ConnectionManagers[DW_COVID]"
+                      description="A conexão de tempo de execução OLE DB usada para acessar o banco de dados."
+                      name="OleDbConnection" />
+                  </connections>
+                  <inputs>
+                    <input
+                      refId="Package\Tabela Municipio\Carga Tabela Stage Municipio\Stage Municipio.Inputs[Entrada de Destino OLE DB]"
+                      errorOrTruncationOperation="Inserir"
+                      errorRowDisposition="FailComponent"
+                      hasSideEffects="true"
+                      name="Entrada de Destino OLE DB">
+                      <inputColumns>
+                        <inputColumn
+                          refId="Package\Tabela Municipio\Carga Tabela Stage Municipio\Stage Municipio.Inputs[Entrada de Destino OLE DB].Columns[municipio]"
+                          cachedDataType="wstr"
+                          cachedLength="255"
+                          cachedName="municipio"
+                          externalMetadataColumnId="Package\Tabela Municipio\Carga Tabela Stage Municipio\Stage Municipio.Inputs[Entrada de Destino OLE DB].ExternalColumns[Municipio]"
+                          lineageId="Package\Tabela Municipio\Carga Tabela Stage Municipio\Agregação.Outputs[Saída de Agregação 1].Columns[municipio]" />
+                        <inputColumn
+                          refId="Package\Tabela Municipio\Carga Tabela Stage Municipio\Stage Municipio.Inputs[Entrada de Destino OLE DB].Columns[codmun]"
+                          cachedDataType="wstr"
+                          cachedLength="255"
+                          cachedName="codmun"
+                          externalMetadataColumnId="Package\Tabela Municipio\Carga Tabela Stage Municipio\Stage Municipio.Inputs[Entrada de Destino OLE DB].ExternalColumns[IDMunicipio]"
+                          lineageId="Package\Tabela Municipio\Carga Tabela Stage Municipio\Agregação.Outputs[Saída de Agregação 1].Columns[codmun]" />
+                      </inputColumns>
+                      <externalMetadataColumns
+                        isUsed="True">
+                        <externalMetadataColumn
+                          refId="Package\Tabela Municipio\Carga Tabela Stage Municipio\Stage Municipio.Inputs[Entrada de Destino OLE DB].ExternalColumns[IDMunicipio]"
+                          dataType="i4"
+                          name="IDMunicipio" />
+                        <externalMetadataColumn
+                          refId="Package\Tabela Municipio\Carga Tabela Stage Municipio\Stage Municipio.Inputs[Entrada de Destino OLE DB].ExternalColumns[Municipio]"
+                          dataType="wstr"
+                          length="50"
+                          name="Municipio" />
+                      </externalMetadataColumns>
+                    </input>
+                  </inputs>
+                  <outputs>
+                    <output
+                      refId="Package\Tabela Municipio\Carga Tabela Stage Municipio\Stage Municipio.Outputs[Saída de Erro de Destino OLE DB]"
+                      exclusionGroup="1"
+                      isErrorOut="true"
+                      name="Saída de Erro de Destino OLE DB"
+                      synchronousInputId="Package\Tabela Municipio\Carga Tabela Stage Municipio\Stage Municipio.Inputs[Entrada de Destino OLE DB]">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\Tabela Municipio\Carga Tabela Stage Municipio\Stage Municipio.Outputs[Saída de Erro de Destino OLE DB].Columns[ErrorCode]"
+                          dataType="i4"
+                          lineageId="Package\Tabela Municipio\Carga Tabela Stage Municipio\Stage Municipio.Outputs[Saída de Erro de Destino OLE DB].Columns[ErrorCode]"
+                          name="ErrorCode"
+                          specialFlags="1" />
+                        <outputColumn
+                          refId="Package\Tabela Municipio\Carga Tabela Stage Municipio\Stage Municipio.Outputs[Saída de Erro de Destino OLE DB].Columns[ErrorColumn]"
+                          dataType="i4"
+                          lineageId="Package\Tabela Municipio\Carga Tabela Stage Municipio\Stage Municipio.Outputs[Saída de Erro de Destino OLE DB].Columns[ErrorColumn]"
+                          name="ErrorColumn"
+                          specialFlags="2" />
+                      </outputColumns>
+                      <externalMetadataColumns />
+                    </output>
+                  </outputs>
+                </component>
+              </components>
+              <paths>
+                <path
+                  refId="Package\Tabela Municipio\Carga Tabela Stage Municipio.Paths[Saída de Agregação 1]"
+                  endId="Package\Tabela Municipio\Carga Tabela Stage Municipio\Stage Municipio.Inputs[Entrada de Destino OLE DB]"
+                  name="Saída de Agregação 1"
+                  startId="Package\Tabela Municipio\Carga Tabela Stage Municipio\Agregação.Outputs[Saída de Agregação 1]" />
+                <path
+                  refId="Package\Tabela Municipio\Carga Tabela Stage Municipio.Paths[Saída de Origem do Excel]"
+                  endId="Package\Tabela Municipio\Carga Tabela Stage Municipio\Agregação.Inputs[Entrada de Agregação 1]"
+                  name="Saída de Origem do Excel"
+                  startId="Package\Tabela Municipio\Carga Tabela Stage Municipio\COVID19BR.Outputs[Saída de Origem do Excel]" />
+              </paths>
+            </pipeline>
+          </DTS:ObjectData>
+        </DTS:Executable>
+      </DTS:Executables>
+      <DTS:PrecedenceConstraints>
+        <DTS:PrecedenceConstraint
+          DTS:refId="Package\Tabela Municipio.PrecedenceConstraints[Restrição]"
+          DTS:CreationName=""
+          DTS:DTSID="{4c9d92a2-1cfc-4cbc-bde9-d47b95ce5b04}"
+          DTS:From="Package\Tabela Municipio\Carga Tabela Stage Municipio"
+          DTS:LogicalAnd="True"
+          DTS:ObjectName="Restrição"
+          DTS:To="Package\Tabela Municipio\Carga Tabela Dimensao municipio" />
+      </DTS:PrecedenceConstraints>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Truncate Stage Municipio"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Tarefa Executar SQL"
+      DTS:DTSID="{C5AA2C4A-7FC1-4726-B1D5-1C884CB95228}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Truncate Stage Municipio"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2019; © 2019 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{C04BDECC-6CF8-46CE-BB23-D9D8A000D69C}"
+          SQLTask:SqlStatementSource="truncate table stage.municipio" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Restrição]"
+      DTS:CreationName=""
+      DTS:DTSID="{8A46438C-C0CB-46F8-876B-FFC11E84788C}"
+      DTS:From="Package\Truncate Stage Municipio"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Restrição"
+      DTS:To="Package\Tabela Municipio" />
+  </DTS:PrecedenceConstraints>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--Esta seção CDATA contém as informações de layout do pacote. A seção inclui informações como coordenadas (x,y), largura e altura.-->
+<!--Se você editar manualmente esta seção e cometer algum erro, poderá excluí-la. -->
+<!--O pacote ainda poderá ser carregado normalmente, mas as informações de layout anteriores serão perdidas e o designer reorganizará automaticamente os elementos na superfície de design.-->
+<Objects
+  Version="8">
+  <!--Cada nó abaixo conterá propriedades que não afetam o comportamento em tempo de execução.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="237.6,41.6"
+          Id="Package\Tabela Municipio\Carga Tabela Dimensao municipio"
+          TopLeft="46.2666620307501,148.053336182064" />
+        <NodeLayout
+          Size="218.4,41.6"
+          Id="Package\Tabela Municipio\Carga Tabela Stage Municipio"
+          TopLeft="50.2666618718043,23.2533351902433" />
+        <EdgeLayout
+          Id="Package\Tabela Municipio.PrecedenceConstraints[Restrição]"
+          TopLeft="162.266661951277,64.8533351902433">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,83.2000009918207"
+              Start="0,0"
+              End="0,75.7000009918207">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,75.7000009918207" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <ContainerLayout
+          HeaderHeight="43"
+          IsExpanded="True"
+          PanelSize="316.8,248.8"
+          Size="316.8,292"
+          Id="Package\Tabela Municipio"
+          TopLeft="95.8333319094447,192.60000105381" />
+        <NodeLayout
+          Size="196,41.6"
+          Id="Package\Truncate Stage Municipio"
+          TopLeft="155.833327141073,84.9333340083228" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Restrição]"
+          TopLeft="254.033329525259,126.533334008323">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,66.0666670454873"
+              Start="0,0"
+              End="0,58.5666670454873">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,58.5666670454873" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+  <TaskHost
+    design-time-name="Package\Tabela Municipio\Carga Tabela Dimensao municipio">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="152.8,41.6"
+          Id="Package\Tabela Municipio\Carga Tabela Dimensao municipio\Stage Municipio"
+          TopLeft="28.8,50.7764705710757" />
+        <NodeLayout
+          Size="160.8,41.6"
+          Id="Package\Tabela Municipio\Carga Tabela Dimensao municipio\Dimensao Estado"
+          TopLeft="309.6,49.6" />
+        <EdgeLayout
+          Id="Package\Tabela Municipio\Carga Tabela Dimensao municipio.Paths[Saída de Origem OLE DB]"
+          TopLeft="181.6,70.9882352855379">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="128,0"
+              Start="0,0"
+              End="120.5,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="120.5,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\Tabela Municipio\Carga Tabela Dimensao municipio\Dimensao Estado">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Tabela Municipio\Carga Tabela Dimensao municipio\Stage Municipio">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <TaskHost
+    design-time-name="Package\Tabela Municipio\Carga Tabela Stage Municipio">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="152,41.6"
+          Id="Package\Tabela Municipio\Carga Tabela Stage Municipio\Stage Municipio"
+          TopLeft="451.523786294488,62.2368632471479" />
+        <NodeLayout
+          Size="137.6,41.6"
+          Id="Package\Tabela Municipio\Carga Tabela Stage Municipio\COVID19BR"
+          TopLeft="56.6666644149358,65.1733338512845" />
+        <NodeLayout
+          Size="128.8,41.6"
+          Id="Package\Tabela Municipio\Carga Tabela Stage Municipio\Agregação"
+          TopLeft="244.666656944487,63.0933338347541" />
+        <EdgeLayout
+          Id="Package\Tabela Municipio\Carga Tabela Stage Municipio.Paths[Saída de Agregação 1]"
+          TopLeft="373.466656944487,83.465098540951">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="78.0571293500014,0"
+              Start="0,0"
+              End="70.5571293500014,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="70.5571293500014,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Tabela Municipio\Carga Tabela Stage Municipio.Paths[Saída de Origem do Excel]"
+          TopLeft="194.266664414936,84.9333338430193">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="50.3999925295514,0"
+              Start="0,0"
+              End="42.8999925295514,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="42.8999925295514,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\Tabela Municipio\Carga Tabela Stage Municipio\Stage Municipio">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Tabela Municipio\Carga Tabela Stage Municipio\COVID19BR">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>

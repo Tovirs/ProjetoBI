@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<DataTransformationsUserConfiguration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Configurations>
+    <Configuration>
+      <Name>Development</Name>
+      <Options>
+        <AssessmentRuleSuppressionSetting />
+        <UseWinAuth>false</UseWinAuth>
+        <WinAuthUserName />
+        <WinAuthDomain />
+        <ServerName>LUIZ\BI</ServerName>
+        <PathOnServer>/SSISDB/ETL/ETL</PathOnServer>
+        <Run64BitRuntime>false</Run64BitRuntime>
+        <UserIDs>
+          <ConfigurationSetting>
+            <Id>{C04BDECC-6CF8-46CE-BB23-D9D8A000D69C}</Id>
+            <Name>{C04BDECC-6CF8-46CE-BB23-D9D8A000D69C}</Name>
+            <Value xsi:type="xsd:string">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAbg8+GMvsZ0Wp0R6Plj+s0AAAAABOAAAAewBDADAANABCAEQARQBDAEMALQA2AEMARgA4AC0ANAA2AEMARQAtAEIAQgAyADMALQBEADkARAA4AEEAMAAwADAARAA2ADkAQwB9AAAAEGYAAAABAAAgAAAAQmWon1MgsNQr1rikUlOPe8yQNEHiQIm57cll5VktabcAAAAADoAAAAACAAAgAAAAEATi4rPtV2HQpPuyOrBUpYd3m4vBO7Xpih9+w69g8hQQAAAALW3aOjsn5cowoRLx+M4FiEAAAABjn04CA/+lNgk/wmYlNSJzkxpxD5Z7R6vsb/xIyG6HJPzEaEdSbl74QaSc/b45FaGqO9IroK2Lhzp7pEcNIg5t</Value>
+          </ConfigurationSetting>
+        </UserIDs>
+        <UserPasswords>
+          <ConfigurationSetting>
+            <Id>{C04BDECC-6CF8-46CE-BB23-D9D8A000D69C}</Id>
+            <Name>{C04BDECC-6CF8-46CE-BB23-D9D8A000D69C}</Name>
+            <Value xsi:type="xsd:string">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAbg8+GMvsZ0Wp0R6Plj+s0AAAAABOAAAAewBDADAANABCAEQARQBDAEMALQA2AEMARgA4AC0ANAA2AEMARQAtAEIAQgAyADMALQBEADkARAA4AEEAMAAwADAARAA2ADkAQwB9AAAAEGYAAAABAAAgAAAACSpOfNnSxI6mlpatWzunvTub94cMoeQLY7EhTez8dR8AAAAADoAAAAACAAAgAAAAeu6CIkJSYDwn/jSz4Cm6I9JQjGtFMoOcGyWCiGsdeqcQAAAAM68k8Pp9NkEsVPqlnxWsEkAAAABZlamOZihyCTr1FBR4kXwZuaNIQ1YB3ogeeTcahmTGcsJ3PZwiqWw6xisYhMz45LADhdKqCVtF6V4GZGYiEty5</Value>
+          </ConfigurationSetting>
+        </UserPasswords>
+        <OfflineMode>false</OfflineMode>
+        <ProgressReporting>true</ProgressReporting>
+        <ParameterConfigurationSensitiveValues>
+          <ConfigurationSetting>
+            <Id>LastModifiedTime</Id>
+            <Name>LastModifiedTime</Name>
+            <Value xsi:type="xsd:dateTime">2020-05-20T18:43:45.0555418Z</Value>
+          </ConfigurationSetting>
+        </ParameterConfigurationSensitiveValues>
+      </Options>
+    </Configuration>
+  </Configurations>
+</DataTransformationsUserConfiguration>

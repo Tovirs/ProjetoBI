@@ -1,0 +1,520 @@
+{
+  "name": "OLAP",
+  "compatibilityLevel": 1200,
+  "model": {
+    "name": "Modelo",
+    "culture": "pt-BR",
+    "dataSources": [
+      {
+        "name": "SqlServer LUIZBI DW_COVID",
+        "connectionString": "Provider=SQLNCLI11;Data Source=LUIZ\\BI;Initial Catalog=DW_COVID;User ID=sa;Persist Security Info=true",
+        "impersonationMode": "impersonateServiceAccount",
+        "annotations": [
+          {
+            "name": "ConnectionEditUISource",
+            "value": "SqlServer"
+          }
+        ]
+      }
+    ],
+    "tables": [
+      {
+        "name": "Estado",
+        "columns": [
+          {
+            "name": "IDEstado",
+            "dataType": "int64",
+            "isHidden": true,
+            "sourceColumn": "IDEstado",
+            "sourceProviderType": "Integer"
+          },
+          {
+            "name": "Estado",
+            "dataType": "string",
+            "sourceColumn": "Estado",
+            "sourceProviderType": "WChar"
+          },
+          {
+            "name": "Populacao",
+            "dataType": "int64",
+            "sourceColumn": "Populacao",
+            "sourceProviderType": "Integer"
+          },
+          {
+            "name": "Regiao",
+            "dataType": "string",
+            "sourceColumn": "Regiao",
+            "sourceProviderType": "WChar"
+          }
+        ],
+        "partitions": [
+          {
+            "name": "Estado",
+            "dataView": "full",
+            "source": {
+              "type": "query",
+              "query": " SELECT [Dimensao].[Estado].* FROM [Dimensao].[Estado] ",
+              "dataSource": "SqlServer LUIZBI DW_COVID"
+            }
+          }
+        ],
+        "hierarchies": [
+          {
+            "name": "Hierarquia Regiao_Estado",
+            "levels": [
+              {
+                "name": "Estado",
+                "ordinal": 1,
+                "column": "Estado"
+              },
+              {
+                "name": "Regiao",
+                "ordinal": 0,
+                "column": "Regiao"
+              }
+            ]
+          }
+        ],
+        "annotations": [
+          {
+            "name": "_TM_ExtProp_QueryDefinition",
+            "value": " SELECT [Dimensao].[Estado].* FROM [Dimensao].[Estado] "
+          },
+          {
+            "name": "_TM_ExtProp_DbTableName",
+            "value": "Estado"
+          },
+          {
+            "name": "_TM_ExtProp_DbSchemaName",
+            "value": "Dimensao"
+          }
+        ]
+      },
+      {
+        "name": "Municipio",
+        "columns": [
+          {
+            "name": "IDMunicipio",
+            "dataType": "int64",
+            "isHidden": true,
+            "sourceColumn": "IDMunicipio",
+            "sourceProviderType": "Integer"
+          },
+          {
+            "name": "Municipio",
+            "dataType": "string",
+            "sourceColumn": "Municipio",
+            "sourceProviderType": "WChar"
+          }
+        ],
+        "partitions": [
+          {
+            "name": "Municipio",
+            "dataView": "full",
+            "source": {
+              "type": "query",
+              "query": " SELECT [Dimensao].[Municipio].* FROM [Dimensao].[Municipio] ",
+              "dataSource": "SqlServer LUIZBI DW_COVID"
+            }
+          }
+        ],
+        "annotations": [
+          {
+            "name": "_TM_ExtProp_QueryDefinition",
+            "value": " SELECT [Dimensao].[Municipio].* FROM [Dimensao].[Municipio] "
+          },
+          {
+            "name": "_TM_ExtProp_DbTableName",
+            "value": "Municipio"
+          },
+          {
+            "name": "_TM_ExtProp_DbSchemaName",
+            "value": "Dimensao"
+          }
+        ]
+      },
+      {
+        "name": "Regiao",
+        "columns": [
+          {
+            "name": "IDRegiao",
+            "dataType": "int64",
+            "isHidden": true,
+            "sourceColumn": "IDRegiao",
+            "sourceProviderType": "Integer"
+          },
+          {
+            "name": "Regiao",
+            "dataType": "string",
+            "sourceColumn": "Regiao",
+            "sourceProviderType": "WChar"
+          }
+        ],
+        "partitions": [
+          {
+            "name": "Regiao",
+            "dataView": "full",
+            "source": {
+              "type": "query",
+              "query": " SELECT [Dimensao].[Regiao].* FROM [Dimensao].[Regiao] ",
+              "dataSource": "SqlServer LUIZBI DW_COVID"
+            }
+          }
+        ],
+        "annotations": [
+          {
+            "name": "_TM_ExtProp_QueryDefinition",
+            "value": " SELECT [Dimensao].[Regiao].* FROM [Dimensao].[Regiao] "
+          },
+          {
+            "name": "_TM_ExtProp_DbTableName",
+            "value": "Regiao"
+          },
+          {
+            "name": "_TM_ExtProp_DbSchemaName",
+            "value": "Dimensao"
+          }
+        ]
+      },
+      {
+        "name": "Tempo",
+        "dataCategory": "Time",
+        "columns": [
+          {
+            "name": "IDTEMPO",
+            "dataType": "int64",
+            "isHidden": true,
+            "sourceColumn": "IDTEMPO",
+            "sourceProviderType": "Integer"
+          },
+          {
+            "name": "DATA",
+            "dataType": "dateTime",
+            "isKey": true,
+            "sourceColumn": "DATA",
+            "formatString": "General Date",
+            "sourceProviderType": "DBDate"
+          },
+          {
+            "name": "ANO",
+            "dataType": "int64",
+            "sourceColumn": "ANO",
+            "sourceProviderType": "SmallInt"
+          },
+          {
+            "name": "MES",
+            "dataType": "int64",
+            "sourceColumn": "MES",
+            "sourceProviderType": "SmallInt"
+          },
+          {
+            "name": "DIA",
+            "dataType": "int64",
+            "sourceColumn": "DIA",
+            "sourceProviderType": "SmallInt"
+          },
+          {
+            "name": "DIA_SEMANA",
+            "dataType": "int64",
+            "sourceColumn": "DIA_SEMANA",
+            "sourceProviderType": "SmallInt"
+          },
+          {
+            "name": "DIA_ANO",
+            "dataType": "int64",
+            "sourceColumn": "DIA_ANO",
+            "sourceProviderType": "SmallInt"
+          },
+          {
+            "name": "ANO_BISSEXTO",
+            "dataType": "string",
+            "sourceColumn": "ANO_BISSEXTO",
+            "sourceProviderType": "Char"
+          },
+          {
+            "name": "DIA_UTIL",
+            "dataType": "string",
+            "sourceColumn": "DIA_UTIL",
+            "sourceProviderType": "Char"
+          },
+          {
+            "name": "FIM_SEMANA",
+            "dataType": "string",
+            "sourceColumn": "FIM_SEMANA",
+            "sourceProviderType": "Char"
+          },
+          {
+            "name": "FERIADO",
+            "dataType": "string",
+            "sourceColumn": "FERIADO",
+            "sourceProviderType": "Char"
+          },
+          {
+            "name": "PRE_FERIADO",
+            "dataType": "string",
+            "sourceColumn": "PRE_FERIADO",
+            "sourceProviderType": "Char"
+          },
+          {
+            "name": "POS_FERIADO",
+            "dataType": "string",
+            "sourceColumn": "POS_FERIADO",
+            "sourceProviderType": "Char"
+          },
+          {
+            "name": "NOME_FERIADO",
+            "dataType": "string",
+            "sourceColumn": "NOME_FERIADO",
+            "sourceProviderType": "WChar"
+          },
+          {
+            "name": "NOME_DIA_SEMANA",
+            "dataType": "string",
+            "sourceColumn": "NOME_DIA_SEMANA",
+            "sourceProviderType": "WChar"
+          },
+          {
+            "name": "NOME_DIA_SEMANA_ABREV",
+            "dataType": "string",
+            "sourceColumn": "NOME_DIA_SEMANA_ABREV",
+            "sourceProviderType": "Char"
+          },
+          {
+            "name": "NOME_MES",
+            "dataType": "string",
+            "sourceColumn": "NOME_MES",
+            "sourceProviderType": "WChar"
+          },
+          {
+            "name": "NOME_MES_ABREV",
+            "dataType": "string",
+            "sourceColumn": "NOME_MES_ABREV",
+            "sourceProviderType": "Char"
+          },
+          {
+            "name": "QUINZENA",
+            "dataType": "int64",
+            "sourceColumn": "QUINZENA",
+            "sourceProviderType": "SmallInt"
+          },
+          {
+            "name": "BIMESTRE",
+            "dataType": "int64",
+            "sourceColumn": "BIMESTRE",
+            "sourceProviderType": "SmallInt"
+          },
+          {
+            "name": "TRIMESTRE",
+            "dataType": "int64",
+            "sourceColumn": "TRIMESTRE",
+            "sourceProviderType": "SmallInt"
+          },
+          {
+            "name": "SEMESTRE",
+            "dataType": "int64",
+            "sourceColumn": "SEMESTRE",
+            "sourceProviderType": "SmallInt"
+          },
+          {
+            "name": "NR_SEMANA_MES",
+            "dataType": "int64",
+            "sourceColumn": "NR_SEMANA_MES",
+            "sourceProviderType": "SmallInt"
+          },
+          {
+            "name": "NR_SEMANA_ANO",
+            "dataType": "int64",
+            "sourceColumn": "NR_SEMANA_ANO",
+            "sourceProviderType": "SmallInt"
+          },
+          {
+            "name": "ESTACAO_ANO",
+            "dataType": "string",
+            "sourceColumn": "ESTACAO_ANO",
+            "sourceProviderType": "Char"
+          },
+          {
+            "name": "DATA_POR_EXTENSO",
+            "dataType": "string",
+            "sourceColumn": "DATA_POR_EXTENSO",
+            "sourceProviderType": "Char"
+          }
+        ],
+        "partitions": [
+          {
+            "name": "Tempo",
+            "dataView": "full",
+            "source": {
+              "type": "query",
+              "query": " SELECT [Dimensao].[Tempo].* FROM [Dimensao].[Tempo] ",
+              "dataSource": "SqlServer LUIZBI DW_COVID"
+            }
+          }
+        ],
+        "hierarchies": [
+          {
+            "name": "Hierarquia Ano_Dia",
+            "levels": [
+              {
+                "name": "ANO",
+                "ordinal": 0,
+                "column": "ANO"
+              },
+              {
+                "name": "SEMESTRE",
+                "ordinal": 1,
+                "column": "SEMESTRE"
+              },
+              {
+                "name": "TRIMESTRE",
+                "ordinal": 2,
+                "column": "TRIMESTRE"
+              },
+              {
+                "name": "BIMESTRE",
+                "ordinal": 3,
+                "column": "BIMESTRE"
+              },
+              {
+                "name": "MES",
+                "ordinal": 4,
+                "column": "MES"
+              },
+              {
+                "name": "DIA",
+                "ordinal": 5,
+                "column": "DIA"
+              }
+            ]
+          }
+        ],
+        "annotations": [
+          {
+            "name": "_TM_ExtProp_QueryDefinition",
+            "value": " SELECT [Dimensao].[Tempo].* FROM [Dimensao].[Tempo] "
+          },
+          {
+            "name": "_TM_ExtProp_DbTableName",
+            "value": "Tempo"
+          },
+          {
+            "name": "_TM_ExtProp_DbSchemaName",
+            "value": "Dimensao"
+          }
+        ]
+      },
+      {
+        "name": "Casos",
+        "columns": [
+          {
+            "name": "IDMunicipio",
+            "dataType": "int64",
+            "isHidden": true,
+            "sourceColumn": "IDMunicipio",
+            "sourceProviderType": "Integer"
+          },
+          {
+            "name": "IDRegiao",
+            "dataType": "int64",
+            "isHidden": true,
+            "sourceColumn": "IDRegiao",
+            "sourceProviderType": "Integer"
+          },
+          {
+            "name": "Casos Confirmados",
+            "dataType": "int64",
+            "sourceColumn": "Casos_Confirmados",
+            "sourceProviderType": "Integer"
+          },
+          {
+            "name": "Mortes",
+            "dataType": "int64",
+            "sourceColumn": "Mortes",
+            "sourceProviderType": "Integer"
+          },
+          {
+            "name": "Recuperados",
+            "dataType": "int64",
+            "sourceColumn": "Recuperados",
+            "sourceProviderType": "Integer"
+          },
+          {
+            "name": "Data da ocorrência",
+            "dataType": "dateTime",
+            "sourceColumn": "Data",
+            "formatString": "General Date",
+            "sourceProviderType": "DBDate"
+          },
+          {
+            "name": "IDEstado",
+            "dataType": "int64",
+            "isHidden": true,
+            "sourceColumn": "IDEstado",
+            "sourceProviderType": "Integer"
+          }
+        ],
+        "partitions": [
+          {
+            "name": "Casos",
+            "dataView": "full",
+            "source": {
+              "type": "query",
+              "query": " SELECT [Fato].[Casos].* FROM [Fato].[Casos] ",
+              "dataSource": "SqlServer LUIZBI DW_COVID"
+            }
+          }
+        ],
+        "annotations": [
+          {
+            "name": "_TM_ExtProp_QueryDefinition",
+            "value": " SELECT [Fato].[Casos].* FROM [Fato].[Casos] "
+          },
+          {
+            "name": "_TM_ExtProp_DbTableName",
+            "value": "Casos"
+          },
+          {
+            "name": "_TM_ExtProp_DbSchemaName",
+            "value": "Fato"
+          }
+        ]
+      }
+    ],
+    "relationships": [
+      {
+        "name": "a9ef92bb-9874-4a12-88b2-7ea4698f5ba6",
+        "fromTable": "Casos",
+        "fromColumn": "IDMunicipio",
+        "toTable": "Municipio",
+        "toColumn": "IDMunicipio"
+      },
+      {
+        "name": "8b80e2f3-c996-4308-b2ce-4c458949823d",
+        "fromTable": "Casos",
+        "fromColumn": "IDRegiao",
+        "toTable": "Regiao",
+        "toColumn": "IDRegiao"
+      },
+      {
+        "name": "b0c6d1a3-7a3a-4035-88eb-7166e8b21b05",
+        "fromTable": "Casos",
+        "fromColumn": "Data da ocorrência",
+        "toTable": "Tempo",
+        "toColumn": "DATA"
+      },
+      {
+        "name": "adc4ea75-23c0-44e5-b821-47af5900a7c6",
+        "fromTable": "Casos",
+        "fromColumn": "IDEstado",
+        "toTable": "Estado",
+        "toColumn": "IDEstado"
+      }
+    ],
+    "annotations": [
+      {
+        "name": "ClientCompatibilityLevel",
+        "value": "400"
+      }
+    ]
+  }
+}

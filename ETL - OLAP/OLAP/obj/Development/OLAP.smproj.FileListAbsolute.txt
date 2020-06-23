@@ -1,0 +1,7 @@
+C:\Users\Luiz Fernando\source\repos\ETL\OLAP\bin\Model.asdatabase
+C:\Users\Luiz Fernando\source\repos\ETL\OLAP\bin\Model.deploymenttargets
+C:\Users\Luiz Fernando\source\repos\ETL\OLAP\bin\Model.deploymentoptions
+C:\Users\Luiz Fernando\source\repos\ETL\OLAP\obj\Development\OLAP.smproj.CoreCompileInputs.cache
+C:\Users\Luiz Fernando\source\repos\ETL\OLAP\obj\Development\Model.asdatabase
+C:\Users\Luiz Fernando\source\repos\ETL\OLAP\obj\Development\Model.deploymentoptions
+C:\Users\Luiz Fernando\source\repos\ETL\OLAP\obj\Development\Model.deploymenttargets

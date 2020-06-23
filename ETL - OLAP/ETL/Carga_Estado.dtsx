@@ -1,0 +1,1267 @@
+﻿<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="5/20/2020 3:16:55 PM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="LUIZ"
+  DTS:CreatorName="LUIZ\Luiz Fernando"
+  DTS:DTSID="{58EBF99E-7B72-4848-BB6B-EA6A393BE494}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="15.0.2000.121"
+  DTS:LocaleID="1046"
+  DTS:ObjectName="Package"
+  DTS:PackageType="5"
+  DTS:VersionBuild="53"
+  DTS:VersionGUID="{A4F03F08-FD9B-4016-9502-EB2C8293BDB7}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[(projeto) COVID19BR.xlsx]"
+      DTS:CreationName="EXCEL"
+      DTS:DTSID="{C8283BA9-F75C-4E64-9B65-869688A518D5}"
+      DTS:ObjectName="(projeto) COVID19BR.xlsx">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Provider=Microsoft.ACE.OLEDB.12.0;Data Source=C:\corona\COVID19BR.xlsx;Extended Properties=&quot;EXCEL 12.0 XML;HDR=YES&quot;;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables />
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\Tabela Estado"
+      DTS:CreationName="STOCK:SEQUENCE"
+      DTS:Description="Contêiner da Sequência"
+      DTS:DTSID="{2E67032A-2F65-4593-B991-A1D5C4099CDF}"
+      DTS:ExecutableType="STOCK:SEQUENCE"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Tabela Estado">
+      <DTS:Variables />
+      <DTS:Executables>
+        <DTS:Executable
+          DTS:refId="Package\Tabela Estado\Carga Tabela Dimensao Estado"
+          DTS:CreationName="Microsoft.Pipeline"
+          DTS:Description="Tarefa Fluxo de Dados"
+          DTS:DTSID="{48EA0431-3CCA-4442-8115-6E444E2C1575}"
+          DTS:ExecutableType="Microsoft.Pipeline"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="Carga Tabela Dimensao Estado"
+          DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <pipeline
+              version="1">
+              <components>
+                <component
+                  refId="Package\Tabela Estado\Carga Tabela Dimensao Estado\Dimensao Estado"
+                  componentClassID="Microsoft.OLEDBDestination"
+                  contactInfo="Destino OLE DB;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; Todos os Direitos Reservados; http://www.microsoft.com/sql/support;4"
+                  description="Destino OLE DB"
+                  name="Dimensao Estado"
+                  usesDispositions="true"
+                  version="4">
+                  <properties>
+                    <property
+                      dataType="System.Int32"
+                      description="O tempo em segundos antes que um comando expire. Zero indica uma expiração infinita."
+                      name="CommandTimeout">0</property>
+                    <property
+                      dataType="System.String"
+                      description="Especifica o nome do objeto de banco de dados usado para abrir um conjunto de linhas."
+                      name="OpenRowset">[Dimensao].[Estado]</property>
+                    <property
+                      dataType="System.String"
+                      description="Especifica a variável que contém o nome do objeto de banco de dados usado para abrir um conjunto de linhas."
+                      name="OpenRowsetVariable"></property>
+                    <property
+                      dataType="System.String"
+                      description="O comando SQL a ser executado."
+                      name="SqlCommand"
+                      UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">SELECT [IDEstado]
+      ,[Estado]
+FROM [DW_COVID].[Dimensao].[Estado]
+where not exists (
+select IDEstado,Estado
+from [DW_COVID].[Stage].[Estado]
+)</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Especifica a página de código de coluna a ser usada quando não há informações de página de código disponíveis a partir da fonte de dados."
+                      name="DefaultCodePage">1252</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Forca o uso do valor da propriedade DefaultCodePage durante a descrição dos dados de caractere."
+                      name="AlwaysUseDefaultCodePage">false</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Especifica o modo usado para acessar o banco de dados."
+                      name="AccessMode"
+                      typeConverter="AccessMode">0</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Indica se os valores fornecidos para colunas de identidade serão copiados no destino. Se false, os valores para colunas de identidade serão gerados automaticamente no destino. Aplicável apenas se o carregamento rápido estiver ativado."
+                      name="FastLoadKeepIdentity">false</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Indica se as colunas que contêm null terão null inserido no destino. Se false, as colunas que contêm null terão seus valores padrão inseridos no destino. Aplicável apenas se o carregamento rápido estiver ativado."
+                      name="FastLoadKeepNulls">false</property>
+                    <property
+                      dataType="System.String"
+                      description="Especifica as opções a serem usadas com o carregamento rápido. Aplicável apenas se o carregamento rápido estiver ativado."
+                      name="FastLoadOptions"></property>
+                    <property
+                      dataType="System.Int32"
+                      description="Especifica quando confirmações são emitidas durante a inserção de dados. Um valor de 0 especifica que uma confirmação será emitida ao final da inserção de dados. Aplicável somente se o carregamento rápido estiver ativado."
+                      name="FastLoadMaxInsertCommitSize">2147483647</property>
+                  </properties>
+                  <connections>
+                    <connection
+                      refId="Package\Tabela Estado\Carga Tabela Dimensao Estado\Dimensao Estado.Connections[OleDbConnection]"
+                      connectionManagerID="{C04BDECC-6CF8-46CE-BB23-D9D8A000D69C}:external"
+                      connectionManagerRefId="Project.ConnectionManagers[DW_COVID]"
+                      description="A conexão de tempo de execução OLE DB usada para acessar o banco de dados."
+                      name="OleDbConnection" />
+                  </connections>
+                  <inputs>
+                    <input
+                      refId="Package\Tabela Estado\Carga Tabela Dimensao Estado\Dimensao Estado.Inputs[Entrada de Destino OLE DB]"
+                      errorOrTruncationOperation="Inserir"
+                      errorRowDisposition="FailComponent"
+                      hasSideEffects="true"
+                      name="Entrada de Destino OLE DB">
+                      <inputColumns>
+                        <inputColumn
+                          refId="Package\Tabela Estado\Carga Tabela Dimensao Estado\Dimensao Estado.Inputs[Entrada de Destino OLE DB].Columns[Estado]"
+                          cachedDataType="wstr"
+                          cachedLength="2"
+                          cachedName="Estado"
+                          externalMetadataColumnId="Package\Tabela Estado\Carga Tabela Dimensao Estado\Dimensao Estado.Inputs[Entrada de Destino OLE DB].ExternalColumns[Estado]"
+                          lineageId="Package\Tabela Estado\Carga Tabela Dimensao Estado\Stage Estado.Outputs[Saída de Origem OLE DB].Columns[Estado]" />
+                        <inputColumn
+                          refId="Package\Tabela Estado\Carga Tabela Dimensao Estado\Dimensao Estado.Inputs[Entrada de Destino OLE DB].Columns[IDEstado]"
+                          cachedDataType="i4"
+                          cachedName="IDEstado"
+                          externalMetadataColumnId="Package\Tabela Estado\Carga Tabela Dimensao Estado\Dimensao Estado.Inputs[Entrada de Destino OLE DB].ExternalColumns[IDEstado]"
+                          lineageId="Package\Tabela Estado\Carga Tabela Dimensao Estado\Stage Estado.Outputs[Saída de Origem OLE DB].Columns[IDEstado]" />
+                        <inputColumn
+                          refId="Package\Tabela Estado\Carga Tabela Dimensao Estado\Dimensao Estado.Inputs[Entrada de Destino OLE DB].Columns[Populacao]"
+                          cachedDataType="i4"
+                          cachedName="Populacao"
+                          externalMetadataColumnId="Package\Tabela Estado\Carga Tabela Dimensao Estado\Dimensao Estado.Inputs[Entrada de Destino OLE DB].ExternalColumns[Populacao]"
+                          lineageId="Package\Tabela Estado\Carga Tabela Dimensao Estado\Stage Estado.Outputs[Saída de Origem OLE DB].Columns[Populacao]" />
+                        <inputColumn
+                          refId="Package\Tabela Estado\Carga Tabela Dimensao Estado\Dimensao Estado.Inputs[Entrada de Destino OLE DB].Columns[Regiao]"
+                          cachedDataType="wstr"
+                          cachedLength="15"
+                          cachedName="Regiao"
+                          externalMetadataColumnId="Package\Tabela Estado\Carga Tabela Dimensao Estado\Dimensao Estado.Inputs[Entrada de Destino OLE DB].ExternalColumns[Regiao]"
+                          lineageId="Package\Tabela Estado\Carga Tabela Dimensao Estado\Stage Estado.Outputs[Saída de Origem OLE DB].Columns[Regiao]" />
+                      </inputColumns>
+                      <externalMetadataColumns
+                        isUsed="True">
+                        <externalMetadataColumn
+                          refId="Package\Tabela Estado\Carga Tabela Dimensao Estado\Dimensao Estado.Inputs[Entrada de Destino OLE DB].ExternalColumns[Estado]"
+                          dataType="wstr"
+                          length="2"
+                          name="Estado" />
+                        <externalMetadataColumn
+                          refId="Package\Tabela Estado\Carga Tabela Dimensao Estado\Dimensao Estado.Inputs[Entrada de Destino OLE DB].ExternalColumns[IDEstado]"
+                          dataType="i4"
+                          name="IDEstado" />
+                        <externalMetadataColumn
+                          refId="Package\Tabela Estado\Carga Tabela Dimensao Estado\Dimensao Estado.Inputs[Entrada de Destino OLE DB].ExternalColumns[Populacao]"
+                          dataType="i4"
+                          name="Populacao" />
+                        <externalMetadataColumn
+                          refId="Package\Tabela Estado\Carga Tabela Dimensao Estado\Dimensao Estado.Inputs[Entrada de Destino OLE DB].ExternalColumns[Regiao]"
+                          dataType="wstr"
+                          length="15"
+                          name="Regiao" />
+                      </externalMetadataColumns>
+                    </input>
+                  </inputs>
+                  <outputs>
+                    <output
+                      refId="Package\Tabela Estado\Carga Tabela Dimensao Estado\Dimensao Estado.Outputs[Saída de Erro de Destino OLE DB]"
+                      exclusionGroup="1"
+                      isErrorOut="true"
+                      name="Saída de Erro de Destino OLE DB"
+                      synchronousInputId="Package\Tabela Estado\Carga Tabela Dimensao Estado\Dimensao Estado.Inputs[Entrada de Destino OLE DB]">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\Tabela Estado\Carga Tabela Dimensao Estado\Dimensao Estado.Outputs[Saída de Erro de Destino OLE DB].Columns[ErrorCode]"
+                          dataType="i4"
+                          lineageId="Package\Tabela Estado\Carga Tabela Dimensao Estado\Dimensao Estado.Outputs[Saída de Erro de Destino OLE DB].Columns[ErrorCode]"
+                          name="ErrorCode"
+                          specialFlags="1" />
+                        <outputColumn
+                          refId="Package\Tabela Estado\Carga Tabela Dimensao Estado\Dimensao Estado.Outputs[Saída de Erro de Destino OLE DB].Columns[ErrorColumn]"
+                          dataType="i4"
+                          lineageId="Package\Tabela Estado\Carga Tabela Dimensao Estado\Dimensao Estado.Outputs[Saída de Erro de Destino OLE DB].Columns[ErrorColumn]"
+                          name="ErrorColumn"
+                          specialFlags="2" />
+                      </outputColumns>
+                      <externalMetadataColumns />
+                    </output>
+                  </outputs>
+                </component>
+                <component
+                  refId="Package\Tabela Estado\Carga Tabela Dimensao Estado\Stage Estado"
+                  componentClassID="Microsoft.OLEDBSource"
+                  contactInfo="Origem OLE DB;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; Todos os Direitos Reservados; http://www.microsoft.com/sql/support;7"
+                  description="Origem OLE DB"
+                  name="Stage Estado"
+                  usesDispositions="true"
+                  version="7">
+                  <properties>
+                    <property
+                      dataType="System.Int32"
+                      description="O tempo em segundos antes que um comando expire. Zero indica uma expiração infinita."
+                      name="CommandTimeout">0</property>
+                    <property
+                      dataType="System.String"
+                      description="Especifica o nome do objeto de banco de dados usado para abrir um conjunto de linhas."
+                      name="OpenRowset">[Stage].[Estado]</property>
+                    <property
+                      dataType="System.String"
+                      description="Especifica a variável que contém o nome do objeto de banco de dados usado para abrir um conjunto de linhas."
+                      name="OpenRowsetVariable"></property>
+                    <property
+                      dataType="System.String"
+                      description="O comando SQL a ser executado."
+                      name="SqlCommand"
+                      UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">Select [IDEstado],
+      [Estado],
+       max(populacao) as Populacao,
+       Regiao
+from [DW_COVID].[Stage].[Estado]
+where idestado is not null
+and idestado not in(
+select idestado
+from dimensao.estado)
+group by [IDEstado],Estado,regiao</property>
+                    <property
+                      dataType="System.String"
+                      description="A variável que contém o comando SQL a ser executado."
+                      name="SqlCommandVariable"></property>
+                    <property
+                      dataType="System.Int32"
+                      description="Especifica a página de código de coluna a ser usada quando não há informações de página de código disponíveis a partir da fonte de dados."
+                      name="DefaultCodePage">1252</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Forca o uso do valor da propriedade DefaultCodePage durante a descrição dos dados de caractere."
+                      name="AlwaysUseDefaultCodePage">false</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Especifica o modo usado para acessar o banco de dados."
+                      name="AccessMode"
+                      typeConverter="AccessMode">2</property>
+                    <property
+                      dataType="System.String"
+                      description="Os mapeamentos entre os parâmetros no comando SQL e as variáveis."
+                      name="ParameterMapping"></property>
+                  </properties>
+                  <connections>
+                    <connection
+                      refId="Package\Tabela Estado\Carga Tabela Dimensao Estado\Stage Estado.Connections[OleDbConnection]"
+                      connectionManagerID="{C04BDECC-6CF8-46CE-BB23-D9D8A000D69C}:external"
+                      connectionManagerRefId="Project.ConnectionManagers[DW_COVID]"
+                      description="A conexão de tempo de execução OLE DB usada para acessar o banco de dados."
+                      name="OleDbConnection" />
+                  </connections>
+                  <outputs>
+                    <output
+                      refId="Package\Tabela Estado\Carga Tabela Dimensao Estado\Stage Estado.Outputs[Saída de Origem OLE DB]"
+                      name="Saída de Origem OLE DB">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\Tabela Estado\Carga Tabela Dimensao Estado\Stage Estado.Outputs[Saída de Origem OLE DB].Columns[Estado]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="Conversão"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Tabela Estado\Carga Tabela Dimensao Estado\Stage Estado.Outputs[Saída de Origem OLE DB].ExternalColumns[Estado]"
+                          length="2"
+                          lineageId="Package\Tabela Estado\Carga Tabela Dimensao Estado\Stage Estado.Outputs[Saída de Origem OLE DB].Columns[Estado]"
+                          name="Estado"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\Tabela Estado\Carga Tabela Dimensao Estado\Stage Estado.Outputs[Saída de Origem OLE DB].Columns[Populacao]"
+                          dataType="i4"
+                          errorOrTruncationOperation="Conversão"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Tabela Estado\Carga Tabela Dimensao Estado\Stage Estado.Outputs[Saída de Origem OLE DB].ExternalColumns[Populacao]"
+                          lineageId="Package\Tabela Estado\Carga Tabela Dimensao Estado\Stage Estado.Outputs[Saída de Origem OLE DB].Columns[Populacao]"
+                          name="Populacao"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\Tabela Estado\Carga Tabela Dimensao Estado\Stage Estado.Outputs[Saída de Origem OLE DB].Columns[Regiao]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="Conversão"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Tabela Estado\Carga Tabela Dimensao Estado\Stage Estado.Outputs[Saída de Origem OLE DB].ExternalColumns[Regiao]"
+                          length="15"
+                          lineageId="Package\Tabela Estado\Carga Tabela Dimensao Estado\Stage Estado.Outputs[Saída de Origem OLE DB].Columns[Regiao]"
+                          name="Regiao"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\Tabela Estado\Carga Tabela Dimensao Estado\Stage Estado.Outputs[Saída de Origem OLE DB].Columns[IDEstado]"
+                          dataType="i4"
+                          errorOrTruncationOperation="Conversão"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Tabela Estado\Carga Tabela Dimensao Estado\Stage Estado.Outputs[Saída de Origem OLE DB].ExternalColumns[IDEstado]"
+                          lineageId="Package\Tabela Estado\Carga Tabela Dimensao Estado\Stage Estado.Outputs[Saída de Origem OLE DB].Columns[IDEstado]"
+                          name="IDEstado"
+                          truncationRowDisposition="FailComponent" />
+                      </outputColumns>
+                      <externalMetadataColumns
+                        isUsed="True">
+                        <externalMetadataColumn
+                          refId="Package\Tabela Estado\Carga Tabela Dimensao Estado\Stage Estado.Outputs[Saída de Origem OLE DB].ExternalColumns[Estado]"
+                          dataType="wstr"
+                          length="2"
+                          name="Estado" />
+                        <externalMetadataColumn
+                          refId="Package\Tabela Estado\Carga Tabela Dimensao Estado\Stage Estado.Outputs[Saída de Origem OLE DB].ExternalColumns[Populacao]"
+                          dataType="i4"
+                          name="Populacao" />
+                        <externalMetadataColumn
+                          refId="Package\Tabela Estado\Carga Tabela Dimensao Estado\Stage Estado.Outputs[Saída de Origem OLE DB].ExternalColumns[Regiao]"
+                          dataType="wstr"
+                          length="15"
+                          name="Regiao" />
+                        <externalMetadataColumn
+                          refId="Package\Tabela Estado\Carga Tabela Dimensao Estado\Stage Estado.Outputs[Saída de Origem OLE DB].ExternalColumns[IDEstado]"
+                          dataType="i4"
+                          name="IDEstado" />
+                      </externalMetadataColumns>
+                    </output>
+                    <output
+                      refId="Package\Tabela Estado\Carga Tabela Dimensao Estado\Stage Estado.Outputs[Saída de Erro de Origem OLE DB]"
+                      isErrorOut="true"
+                      name="Saída de Erro de Origem OLE DB">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\Tabela Estado\Carga Tabela Dimensao Estado\Stage Estado.Outputs[Saída de Erro de Origem OLE DB].Columns[IDEstado]"
+                          dataType="i4"
+                          lineageId="Package\Tabela Estado\Carga Tabela Dimensao Estado\Stage Estado.Outputs[Saída de Erro de Origem OLE DB].Columns[IDEstado]"
+                          name="IDEstado" />
+                        <outputColumn
+                          refId="Package\Tabela Estado\Carga Tabela Dimensao Estado\Stage Estado.Outputs[Saída de Erro de Origem OLE DB].Columns[Estado]"
+                          dataType="wstr"
+                          length="2"
+                          lineageId="Package\Tabela Estado\Carga Tabela Dimensao Estado\Stage Estado.Outputs[Saída de Erro de Origem OLE DB].Columns[Estado]"
+                          name="Estado" />
+                        <outputColumn
+                          refId="Package\Tabela Estado\Carga Tabela Dimensao Estado\Stage Estado.Outputs[Saída de Erro de Origem OLE DB].Columns[Populacao]"
+                          dataType="i4"
+                          lineageId="Package\Tabela Estado\Carga Tabela Dimensao Estado\Stage Estado.Outputs[Saída de Erro de Origem OLE DB].Columns[Populacao]"
+                          name="Populacao" />
+                        <outputColumn
+                          refId="Package\Tabela Estado\Carga Tabela Dimensao Estado\Stage Estado.Outputs[Saída de Erro de Origem OLE DB].Columns[Regiao]"
+                          dataType="wstr"
+                          length="15"
+                          lineageId="Package\Tabela Estado\Carga Tabela Dimensao Estado\Stage Estado.Outputs[Saída de Erro de Origem OLE DB].Columns[Regiao]"
+                          name="Regiao" />
+                        <outputColumn
+                          refId="Package\Tabela Estado\Carga Tabela Dimensao Estado\Stage Estado.Outputs[Saída de Erro de Origem OLE DB].Columns[ErrorCode]"
+                          dataType="i4"
+                          lineageId="Package\Tabela Estado\Carga Tabela Dimensao Estado\Stage Estado.Outputs[Saída de Erro de Origem OLE DB].Columns[ErrorCode]"
+                          name="ErrorCode"
+                          specialFlags="1" />
+                        <outputColumn
+                          refId="Package\Tabela Estado\Carga Tabela Dimensao Estado\Stage Estado.Outputs[Saída de Erro de Origem OLE DB].Columns[ErrorColumn]"
+                          dataType="i4"
+                          lineageId="Package\Tabela Estado\Carga Tabela Dimensao Estado\Stage Estado.Outputs[Saída de Erro de Origem OLE DB].Columns[ErrorColumn]"
+                          name="ErrorColumn"
+                          specialFlags="2" />
+                      </outputColumns>
+                      <externalMetadataColumns />
+                    </output>
+                  </outputs>
+                </component>
+              </components>
+              <paths>
+                <path
+                  refId="Package\Tabela Estado\Carga Tabela Dimensao Estado.Paths[Saída de Origem OLE DB]"
+                  endId="Package\Tabela Estado\Carga Tabela Dimensao Estado\Dimensao Estado.Inputs[Entrada de Destino OLE DB]"
+                  name="Saída de Origem OLE DB"
+                  startId="Package\Tabela Estado\Carga Tabela Dimensao Estado\Stage Estado.Outputs[Saída de Origem OLE DB]" />
+              </paths>
+            </pipeline>
+          </DTS:ObjectData>
+        </DTS:Executable>
+        <DTS:Executable
+          DTS:refId="Package\Tabela Estado\Carga Tabela Stage Estado"
+          DTS:CreationName="Microsoft.Pipeline"
+          DTS:Description="Tarefa Fluxo de Dados"
+          DTS:DTSID="{66FAF3BE-A1A8-42F4-856C-E001B83BDF1B}"
+          DTS:ExecutableType="Microsoft.Pipeline"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="Carga Tabela Stage Estado"
+          DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <pipeline
+              version="1">
+              <components>
+                <component
+                  refId="Package\Tabela Estado\Carga Tabela Stage Estado\Agregação"
+                  componentClassID="Microsoft.Aggregate"
+                  contactInfo="Agregação;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; Todos os Direitos Reservados; http://www.microsoft.com/sql/support;3"
+                  description="Dados de agregações com funções como Average, Sum, Count, Max e Min. Por exemplo, agrupe dados para computar a soma das vendas por produto ou a média de visitas por dia."
+                  name="Agregação"
+                  version="3">
+                  <properties>
+                    <property
+                      dataType="System.Int32"
+                      description="Especifica o número aproximado de chaves de agrupar por produzidas pela agregação. Um número Baixo indica valores de 500.000 chaves. Médio indica 5 valores de 5 milhões de chaves e Alto indica mais de 25 milhões de valores de chaves. Não especificado indica que nenhum valor de KeyScale foi usado."
+                      name="KeyScale"
+                      typeConverter="KeyScaleType">0</property>
+                    <property
+                      dataType="System.Null"
+                      description="Especifica o número exato de chaves de agrupar por produzidas pela agregação. Se um valor de KeyScale for especificado, o valor em Keys terá precedência."
+                      name="Keys" />
+                    <property
+                      dataType="System.Int32"
+                      description="Especifica o número aproximado de valores distintos em uma coluna que a agregação conta de modo distinto. Baixo indica 500.000 valores de chave, Médio indica 5 milhões de valores de chave e Alto indica mais de 25 milhões de valores de chave. Não especificado indica que nenhum valor de CountDistinctScale foi usado."
+                      name="CountDistinctScale"
+                      typeConverter="KeyScaleType">0</property>
+                    <property
+                      dataType="System.Null"
+                      description="Especifica o número exato de valores distintos de uma coluna que a agregação conta de modo distinto. Se um valor de CountDistinctScale for especificado, o valor em CountDistinctKeys terá precedência."
+                      name="CountDistinctKeys" />
+                    <property
+                      dataType="System.Int32"
+                      description="Especifica a porcentagem pela qual a memória pode ser estendida durante a agregação. Os valores válidos ficam entre 1 e 100."
+                      name="AutoExtendFactor">25</property>
+                  </properties>
+                  <inputs>
+                    <input
+                      refId="Package\Tabela Estado\Carga Tabela Stage Estado\Agregação.Inputs[Entrada de Agregação 1]"
+                      name="Entrada de Agregação 1">
+                      <inputColumns>
+                        <inputColumn
+                          refId="Package\Tabela Estado\Carga Tabela Stage Estado\Agregação.Inputs[Entrada de Agregação 1].Columns[coduf]"
+                          cachedDataType="wstr"
+                          cachedLength="255"
+                          cachedName="coduf"
+                          lineageId="Package\Tabela Estado\Carga Tabela Stage Estado\COVID19BR.Outputs[Saída de Origem do Excel].Columns[coduf]" />
+                        <inputColumn
+                          refId="Package\Tabela Estado\Carga Tabela Stage Estado\Agregação.Inputs[Entrada de Agregação 1].Columns[estado]"
+                          cachedDataType="wstr"
+                          cachedLength="255"
+                          cachedName="estado"
+                          lineageId="Package\Tabela Estado\Carga Tabela Stage Estado\COVID19BR.Outputs[Saída de Origem do Excel].Columns[estado]" />
+                        <inputColumn
+                          refId="Package\Tabela Estado\Carga Tabela Stage Estado\Agregação.Inputs[Entrada de Agregação 1].Columns[populacaoTCU2019]"
+                          cachedDataType="wstr"
+                          cachedLength="255"
+                          cachedName="populacaoTCU2019"
+                          lineageId="Package\Tabela Estado\Carga Tabela Stage Estado\COVID19BR.Outputs[Saída de Origem do Excel].Columns[populacaoTCU2019]" />
+                        <inputColumn
+                          refId="Package\Tabela Estado\Carga Tabela Stage Estado\Agregação.Inputs[Entrada de Agregação 1].Columns[regiao]"
+                          cachedDataType="wstr"
+                          cachedLength="255"
+                          cachedName="regiao"
+                          lineageId="Package\Tabela Estado\Carga Tabela Stage Estado\COVID19BR.Outputs[Saída de Origem do Excel].Columns[regiao]" />
+                      </inputColumns>
+                      <externalMetadataColumns />
+                    </input>
+                  </inputs>
+                  <outputs>
+                    <output
+                      refId="Package\Tabela Estado\Carga Tabela Stage Estado\Agregação.Outputs[Saída de Agregação 1]"
+                      name="Saída de Agregação 1">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Especifica o número aproximado de chaves de agrupar por produzidas pela agregação. Um número Baixo indica valores de 500.000 chaves. Médio indica 5 valores de 5 milhões de chaves e Alto indica mais de 25 milhões de valores de chaves. Não especificado indica que nenhum valor de KeyScale foi usado."
+                          name="KeyScale"
+                          typeConverter="KeyScaleType">0</property>
+                        <property
+                          dataType="System.Null"
+                          description="Especifica o número exato de chaves de agrupar por produzidas pela agregação. Se um valor de KeyScale for especificado, o valor em Keys terá precedência."
+                          name="Keys" />
+                      </properties>
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\Tabela Estado\Carga Tabela Stage Estado\Agregação.Outputs[Saída de Agregação 1].Columns[coduf]"
+                          dataType="wstr"
+                          length="255"
+                          lineageId="Package\Tabela Estado\Carga Tabela Stage Estado\Agregação.Outputs[Saída de Agregação 1].Columns[coduf]"
+                          name="coduf">
+                          <properties>
+                            <property
+                              containsID="true"
+                              dataType="System.Int32"
+                              description="Especifica a identificação da coluna de entrada usada na agregação."
+                              name="AggregationColumnId">#{Package\Tabela Estado\Carga Tabela Stage Estado\COVID19BR.Outputs[Saída de Origem do Excel].Columns[coduf]}</property>
+                            <property
+                              dataType="System.Int32"
+                              description="Especifica o tipo de agregação."
+                              name="AggregationType"
+                              typeConverter="AggregationType">0</property>
+                            <property
+                              dataType="System.Int32"
+                              description="Indica se a coluna requer tratamento especial porque pode conter dados superdimensionados ou exigir precisão superior a de um tipo de dados flutuante."
+                              name="IsBig">1</property>
+                            <property
+                              dataType="System.Int32"
+                              description="Especifica as opções de comparação da cadeia de caracteres."
+                              name="AggregationComparisonFlags">0</property>
+                          </properties>
+                        </outputColumn>
+                        <outputColumn
+                          refId="Package\Tabela Estado\Carga Tabela Stage Estado\Agregação.Outputs[Saída de Agregação 1].Columns[estado]"
+                          dataType="wstr"
+                          length="255"
+                          lineageId="Package\Tabela Estado\Carga Tabela Stage Estado\Agregação.Outputs[Saída de Agregação 1].Columns[estado]"
+                          name="estado">
+                          <properties>
+                            <property
+                              containsID="true"
+                              dataType="System.Int32"
+                              description="Especifica a identificação da coluna de entrada usada na agregação."
+                              name="AggregationColumnId">#{Package\Tabela Estado\Carga Tabela Stage Estado\COVID19BR.Outputs[Saída de Origem do Excel].Columns[estado]}</property>
+                            <property
+                              dataType="System.Int32"
+                              description="Especifica o tipo de agregação."
+                              name="AggregationType"
+                              typeConverter="AggregationType">0</property>
+                            <property
+                              dataType="System.Int32"
+                              description="Indica se a coluna requer tratamento especial porque pode conter dados superdimensionados ou exigir precisão superior a de um tipo de dados flutuante."
+                              name="IsBig">1</property>
+                            <property
+                              dataType="System.Int32"
+                              description="Especifica as opções de comparação da cadeia de caracteres."
+                              name="AggregationComparisonFlags">0</property>
+                          </properties>
+                        </outputColumn>
+                        <outputColumn
+                          refId="Package\Tabela Estado\Carga Tabela Stage Estado\Agregação.Outputs[Saída de Agregação 1].Columns[populacaoTCU2019]"
+                          dataType="wstr"
+                          length="255"
+                          lineageId="Package\Tabela Estado\Carga Tabela Stage Estado\Agregação.Outputs[Saída de Agregação 1].Columns[populacaoTCU2019]"
+                          name="populacaoTCU2019">
+                          <properties>
+                            <property
+                              containsID="true"
+                              dataType="System.Int32"
+                              description="Especifica a identificação da coluna de entrada usada na agregação."
+                              name="AggregationColumnId">#{Package\Tabela Estado\Carga Tabela Stage Estado\COVID19BR.Outputs[Saída de Origem do Excel].Columns[populacaoTCU2019]}</property>
+                            <property
+                              dataType="System.Int32"
+                              description="Especifica o tipo de agregação."
+                              name="AggregationType"
+                              typeConverter="AggregationType">0</property>
+                            <property
+                              dataType="System.Int32"
+                              description="Indica se a coluna requer tratamento especial porque pode conter dados superdimensionados ou exigir precisão superior a de um tipo de dados flutuante."
+                              name="IsBig">1</property>
+                            <property
+                              dataType="System.Int32"
+                              description="Especifica as opções de comparação da cadeia de caracteres."
+                              name="AggregationComparisonFlags">0</property>
+                          </properties>
+                        </outputColumn>
+                        <outputColumn
+                          refId="Package\Tabela Estado\Carga Tabela Stage Estado\Agregação.Outputs[Saída de Agregação 1].Columns[regiao]"
+                          dataType="wstr"
+                          length="255"
+                          lineageId="Package\Tabela Estado\Carga Tabela Stage Estado\Agregação.Outputs[Saída de Agregação 1].Columns[regiao]"
+                          name="regiao">
+                          <properties>
+                            <property
+                              containsID="true"
+                              dataType="System.Int32"
+                              description="Especifica a identificação da coluna de entrada usada na agregação."
+                              name="AggregationColumnId">#{Package\Tabela Estado\Carga Tabela Stage Estado\COVID19BR.Outputs[Saída de Origem do Excel].Columns[regiao]}</property>
+                            <property
+                              dataType="System.Int32"
+                              description="Especifica o tipo de agregação."
+                              name="AggregationType"
+                              typeConverter="AggregationType">0</property>
+                            <property
+                              dataType="System.Int32"
+                              description="Indica se a coluna requer tratamento especial porque pode conter dados superdimensionados ou exigir precisão superior a de um tipo de dados flutuante."
+                              name="IsBig">1</property>
+                            <property
+                              dataType="System.Int32"
+                              description="Especifica as opções de comparação da cadeia de caracteres."
+                              name="AggregationComparisonFlags">0</property>
+                          </properties>
+                        </outputColumn>
+                      </outputColumns>
+                      <externalMetadataColumns />
+                    </output>
+                  </outputs>
+                </component>
+                <component
+                  refId="Package\Tabela Estado\Carga Tabela Stage Estado\COVID19BR"
+                  componentClassID="Microsoft.ExcelSource"
+                  contactInfo="Origem do Excel;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; Todos os Direitos Reservados; http://www.microsoft.com/sql/support;1"
+                  description="Origem do Excel"
+                  name="COVID19BR"
+                  usesDispositions="true"
+                  version="1">
+                  <properties>
+                    <property
+                      dataType="System.Int32"
+                      description="O tempo em segundos antes que um comando expire. Zero indica uma expiração infinita."
+                      name="CommandTimeout">0</property>
+                    <property
+                      dataType="System.String"
+                      description="Especifica o nome do objeto de banco de dados usado para abrir um conjunto de linhas."
+                      name="OpenRowset">'Sheet 1$'</property>
+                    <property
+                      dataType="System.String"
+                      description="Especifica a variável que contém o nome do objeto de banco de dados usado para abrir um conjunto de linhas."
+                      name="OpenRowsetVariable"></property>
+                    <property
+                      dataType="System.String"
+                      description="O comando SQL a ser executado."
+                      name="SqlCommand"
+                      UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                    <property
+                      dataType="System.String"
+                      description="A variável que contém o comando SQL a ser executado."
+                      name="SqlCommandVariable"></property>
+                    <property
+                      dataType="System.Int32"
+                      description="Especifica o modo usado para acessar o banco de dados."
+                      name="AccessMode"
+                      typeConverter="AccessMode">0</property>
+                    <property
+                      dataType="System.String"
+                      description="O mapeamento de parâmetros no comando SQL para variáveis."
+                      name="ParameterMapping"></property>
+                  </properties>
+                  <connections>
+                    <connection
+                      refId="Package\Tabela Estado\Carga Tabela Stage Estado\COVID19BR.Connections[OleDbConnection]"
+                      connectionManagerID="Package.ConnectionManagers[(projeto) COVID19BR.xlsx]"
+                      connectionManagerRefId="Package.ConnectionManagers[(projeto) COVID19BR.xlsx]"
+                      description="A conexão de tempo de execução OLE DB usada para acessar o banco de dados."
+                      name="OleDbConnection" />
+                  </connections>
+                  <outputs>
+                    <output
+                      refId="Package\Tabela Estado\Carga Tabela Stage Estado\COVID19BR.Outputs[Saída de Origem do Excel]"
+                      name="Saída de Origem do Excel">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\Tabela Estado\Carga Tabela Stage Estado\COVID19BR.Outputs[Saída de Origem do Excel].Columns[coduf]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="Conversão"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Tabela Estado\Carga Tabela Stage Estado\COVID19BR.Outputs[Saída de Origem do Excel].ExternalColumns[coduf]"
+                          length="255"
+                          lineageId="Package\Tabela Estado\Carga Tabela Stage Estado\COVID19BR.Outputs[Saída de Origem do Excel].Columns[coduf]"
+                          name="coduf"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\Tabela Estado\Carga Tabela Stage Estado\COVID19BR.Outputs[Saída de Origem do Excel].Columns[estado]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="Conversão"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Tabela Estado\Carga Tabela Stage Estado\COVID19BR.Outputs[Saída de Origem do Excel].ExternalColumns[estado]"
+                          length="255"
+                          lineageId="Package\Tabela Estado\Carga Tabela Stage Estado\COVID19BR.Outputs[Saída de Origem do Excel].Columns[estado]"
+                          name="estado"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\Tabela Estado\Carga Tabela Stage Estado\COVID19BR.Outputs[Saída de Origem do Excel].Columns[populacaoTCU2019]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="Conversão"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Tabela Estado\Carga Tabela Stage Estado\COVID19BR.Outputs[Saída de Origem do Excel].ExternalColumns[populacaoTCU2019]"
+                          length="255"
+                          lineageId="Package\Tabela Estado\Carga Tabela Stage Estado\COVID19BR.Outputs[Saída de Origem do Excel].Columns[populacaoTCU2019]"
+                          name="populacaoTCU2019"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\Tabela Estado\Carga Tabela Stage Estado\COVID19BR.Outputs[Saída de Origem do Excel].Columns[regiao]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="Conversão"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Tabela Estado\Carga Tabela Stage Estado\COVID19BR.Outputs[Saída de Origem do Excel].ExternalColumns[regiao]"
+                          length="255"
+                          lineageId="Package\Tabela Estado\Carga Tabela Stage Estado\COVID19BR.Outputs[Saída de Origem do Excel].Columns[regiao]"
+                          name="regiao"
+                          truncationRowDisposition="FailComponent" />
+                      </outputColumns>
+                      <externalMetadataColumns
+                        isUsed="True">
+                        <externalMetadataColumn
+                          refId="Package\Tabela Estado\Carga Tabela Stage Estado\COVID19BR.Outputs[Saída de Origem do Excel].ExternalColumns[regiao]"
+                          dataType="wstr"
+                          length="255"
+                          name="regiao" />
+                        <externalMetadataColumn
+                          refId="Package\Tabela Estado\Carga Tabela Stage Estado\COVID19BR.Outputs[Saída de Origem do Excel].ExternalColumns[estado]"
+                          dataType="wstr"
+                          length="255"
+                          name="estado" />
+                        <externalMetadataColumn
+                          refId="Package\Tabela Estado\Carga Tabela Stage Estado\COVID19BR.Outputs[Saída de Origem do Excel].ExternalColumns[municipio]"
+                          dataType="wstr"
+                          length="255"
+                          name="municipio" />
+                        <externalMetadataColumn
+                          refId="Package\Tabela Estado\Carga Tabela Stage Estado\COVID19BR.Outputs[Saída de Origem do Excel].ExternalColumns[coduf]"
+                          dataType="wstr"
+                          length="255"
+                          name="coduf" />
+                        <externalMetadataColumn
+                          refId="Package\Tabela Estado\Carga Tabela Stage Estado\COVID19BR.Outputs[Saída de Origem do Excel].ExternalColumns[codmun]"
+                          dataType="wstr"
+                          length="255"
+                          name="codmun" />
+                        <externalMetadataColumn
+                          refId="Package\Tabela Estado\Carga Tabela Stage Estado\COVID19BR.Outputs[Saída de Origem do Excel].ExternalColumns[codRegiaoSaude]"
+                          dataType="wstr"
+                          length="255"
+                          name="codRegiaoSaude" />
+                        <externalMetadataColumn
+                          refId="Package\Tabela Estado\Carga Tabela Stage Estado\COVID19BR.Outputs[Saída de Origem do Excel].ExternalColumns[nomeRegiaoSaude]"
+                          dataType="wstr"
+                          length="255"
+                          name="nomeRegiaoSaude" />
+                        <externalMetadataColumn
+                          refId="Package\Tabela Estado\Carga Tabela Stage Estado\COVID19BR.Outputs[Saída de Origem do Excel].ExternalColumns[data]"
+                          dataType="wstr"
+                          length="255"
+                          name="data" />
+                        <externalMetadataColumn
+                          refId="Package\Tabela Estado\Carga Tabela Stage Estado\COVID19BR.Outputs[Saída de Origem do Excel].ExternalColumns[semanaEpi]"
+                          dataType="wstr"
+                          length="255"
+                          name="semanaEpi" />
+                        <externalMetadataColumn
+                          refId="Package\Tabela Estado\Carga Tabela Stage Estado\COVID19BR.Outputs[Saída de Origem do Excel].ExternalColumns[populacaoTCU2019]"
+                          dataType="wstr"
+                          length="255"
+                          name="populacaoTCU2019" />
+                        <externalMetadataColumn
+                          refId="Package\Tabela Estado\Carga Tabela Stage Estado\COVID19BR.Outputs[Saída de Origem do Excel].ExternalColumns[casosAcumulado]"
+                          dataType="wstr"
+                          length="255"
+                          name="casosAcumulado" />
+                        <externalMetadataColumn
+                          refId="Package\Tabela Estado\Carga Tabela Stage Estado\COVID19BR.Outputs[Saída de Origem do Excel].ExternalColumns[obitosAcumulado]"
+                          dataType="wstr"
+                          length="255"
+                          name="obitosAcumulado" />
+                        <externalMetadataColumn
+                          refId="Package\Tabela Estado\Carga Tabela Stage Estado\COVID19BR.Outputs[Saída de Origem do Excel].ExternalColumns[Recuperadosnovos]"
+                          dataType="wstr"
+                          length="255"
+                          name="Recuperadosnovos" />
+                        <externalMetadataColumn
+                          refId="Package\Tabela Estado\Carga Tabela Stage Estado\COVID19BR.Outputs[Saída de Origem do Excel].ExternalColumns[emAcompanhamentoNovos]"
+                          dataType="wstr"
+                          length="255"
+                          name="emAcompanhamentoNovos" />
+                        <externalMetadataColumn
+                          refId="Package\Tabela Estado\Carga Tabela Stage Estado\COVID19BR.Outputs[Saída de Origem do Excel].ExternalColumns[casosNovos]"
+                          dataType="wstr"
+                          length="255"
+                          name="casosNovos" />
+                        <externalMetadataColumn
+                          refId="Package\Tabela Estado\Carga Tabela Stage Estado\COVID19BR.Outputs[Saída de Origem do Excel].ExternalColumns[obitosNovos]"
+                          dataType="wstr"
+                          length="255"
+                          name="obitosNovos" />
+                      </externalMetadataColumns>
+                    </output>
+                    <output
+                      refId="Package\Tabela Estado\Carga Tabela Stage Estado\COVID19BR.Outputs[Saída de Erro de Origem do Excel]"
+                      isErrorOut="true"
+                      name="Saída de Erro de Origem do Excel">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\Tabela Estado\Carga Tabela Stage Estado\COVID19BR.Outputs[Saída de Erro de Origem do Excel].Columns[ErrorCode]"
+                          dataType="i4"
+                          lineageId="Package\Tabela Estado\Carga Tabela Stage Estado\COVID19BR.Outputs[Saída de Erro de Origem do Excel].Columns[ErrorCode]"
+                          name="ErrorCode"
+                          specialFlags="1" />
+                        <outputColumn
+                          refId="Package\Tabela Estado\Carga Tabela Stage Estado\COVID19BR.Outputs[Saída de Erro de Origem do Excel].Columns[ErrorColumn]"
+                          dataType="i4"
+                          lineageId="Package\Tabela Estado\Carga Tabela Stage Estado\COVID19BR.Outputs[Saída de Erro de Origem do Excel].Columns[ErrorColumn]"
+                          name="ErrorColumn"
+                          specialFlags="2" />
+                        <outputColumn
+                          refId="Package\Tabela Estado\Carga Tabela Stage Estado\COVID19BR.Outputs[Saída de Erro de Origem do Excel].Columns[coduf]"
+                          dataType="wstr"
+                          length="255"
+                          lineageId="Package\Tabela Estado\Carga Tabela Stage Estado\COVID19BR.Outputs[Saída de Erro de Origem do Excel].Columns[coduf]"
+                          name="coduf" />
+                        <outputColumn
+                          refId="Package\Tabela Estado\Carga Tabela Stage Estado\COVID19BR.Outputs[Saída de Erro de Origem do Excel].Columns[estado]"
+                          dataType="wstr"
+                          length="255"
+                          lineageId="Package\Tabela Estado\Carga Tabela Stage Estado\COVID19BR.Outputs[Saída de Erro de Origem do Excel].Columns[estado]"
+                          name="estado" />
+                        <outputColumn
+                          refId="Package\Tabela Estado\Carga Tabela Stage Estado\COVID19BR.Outputs[Saída de Erro de Origem do Excel].Columns[populacaoTCU2019]"
+                          dataType="wstr"
+                          length="255"
+                          lineageId="Package\Tabela Estado\Carga Tabela Stage Estado\COVID19BR.Outputs[Saída de Erro de Origem do Excel].Columns[populacaoTCU2019]"
+                          name="populacaoTCU2019" />
+                        <outputColumn
+                          refId="Package\Tabela Estado\Carga Tabela Stage Estado\COVID19BR.Outputs[Saída de Erro de Origem do Excel].Columns[regiao]"
+                          dataType="wstr"
+                          length="255"
+                          lineageId="Package\Tabela Estado\Carga Tabela Stage Estado\COVID19BR.Outputs[Saída de Erro de Origem do Excel].Columns[regiao]"
+                          name="regiao" />
+                      </outputColumns>
+                      <externalMetadataColumns />
+                    </output>
+                  </outputs>
+                </component>
+                <component
+                  refId="Package\Tabela Estado\Carga Tabela Stage Estado\Stage Estado"
+                  componentClassID="Microsoft.OLEDBDestination"
+                  contactInfo="Destino OLE DB;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; Todos os Direitos Reservados; http://www.microsoft.com/sql/support;4"
+                  description="Destino OLE DB"
+                  name="Stage Estado"
+                  usesDispositions="true"
+                  version="4">
+                  <properties>
+                    <property
+                      dataType="System.Int32"
+                      description="O tempo em segundos antes que um comando expire. Zero indica uma expiração infinita."
+                      name="CommandTimeout">0</property>
+                    <property
+                      dataType="System.String"
+                      description="Especifica o nome do objeto de banco de dados usado para abrir um conjunto de linhas."
+                      name="OpenRowset">[Stage].[Estado]</property>
+                    <property
+                      dataType="System.String"
+                      description="Especifica a variável que contém o nome do objeto de banco de dados usado para abrir um conjunto de linhas."
+                      name="OpenRowsetVariable"></property>
+                    <property
+                      dataType="System.String"
+                      description="O comando SQL a ser executado."
+                      name="SqlCommand"
+                      UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">SELECT [IDEstado]
+      ,ISNULL([Estado],'BR') as Estado
+  FROM [DW_COVID].[Stage].[Estado]
+where IDEstado is not null</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Especifica a página de código de coluna a ser usada quando não há informações de página de código disponíveis a partir da fonte de dados."
+                      name="DefaultCodePage">1252</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Forca o uso do valor da propriedade DefaultCodePage durante a descrição dos dados de caractere."
+                      name="AlwaysUseDefaultCodePage">false</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Especifica o modo usado para acessar o banco de dados."
+                      name="AccessMode"
+                      typeConverter="AccessMode">0</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Indica se os valores fornecidos para colunas de identidade serão copiados no destino. Se false, os valores para colunas de identidade serão gerados automaticamente no destino. Aplicável apenas se o carregamento rápido estiver ativado."
+                      name="FastLoadKeepIdentity">false</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Indica se as colunas que contêm null terão null inserido no destino. Se false, as colunas que contêm null terão seus valores padrão inseridos no destino. Aplicável apenas se o carregamento rápido estiver ativado."
+                      name="FastLoadKeepNulls">false</property>
+                    <property
+                      dataType="System.String"
+                      description="Especifica as opções a serem usadas com o carregamento rápido. Aplicável apenas se o carregamento rápido estiver ativado."
+                      name="FastLoadOptions">TABLOCK,CHECK_CONSTRAINTS</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Especifica quando confirmações são emitidas durante a inserção de dados. Um valor de 0 especifica que uma confirmação será emitida ao final da inserção de dados. Aplicável somente se o carregamento rápido estiver ativado."
+                      name="FastLoadMaxInsertCommitSize">2147483647</property>
+                  </properties>
+                  <connections>
+                    <connection
+                      refId="Package\Tabela Estado\Carga Tabela Stage Estado\Stage Estado.Connections[OleDbConnection]"
+                      connectionManagerID="{C04BDECC-6CF8-46CE-BB23-D9D8A000D69C}:external"
+                      connectionManagerRefId="Project.ConnectionManagers[DW_COVID]"
+                      description="A conexão de tempo de execução OLE DB usada para acessar o banco de dados."
+                      name="OleDbConnection" />
+                  </connections>
+                  <inputs>
+                    <input
+                      refId="Package\Tabela Estado\Carga Tabela Stage Estado\Stage Estado.Inputs[Entrada de Destino OLE DB]"
+                      errorOrTruncationOperation="Inserir"
+                      errorRowDisposition="FailComponent"
+                      hasSideEffects="true"
+                      name="Entrada de Destino OLE DB">
+                      <inputColumns>
+                        <inputColumn
+                          refId="Package\Tabela Estado\Carga Tabela Stage Estado\Stage Estado.Inputs[Entrada de Destino OLE DB].Columns[coduf]"
+                          cachedDataType="wstr"
+                          cachedLength="255"
+                          cachedName="coduf"
+                          externalMetadataColumnId="Package\Tabela Estado\Carga Tabela Stage Estado\Stage Estado.Inputs[Entrada de Destino OLE DB].ExternalColumns[IDEstado]"
+                          lineageId="Package\Tabela Estado\Carga Tabela Stage Estado\Agregação.Outputs[Saída de Agregação 1].Columns[coduf]" />
+                        <inputColumn
+                          refId="Package\Tabela Estado\Carga Tabela Stage Estado\Stage Estado.Inputs[Entrada de Destino OLE DB].Columns[estado]"
+                          cachedDataType="wstr"
+                          cachedLength="255"
+                          cachedName="estado"
+                          externalMetadataColumnId="Package\Tabela Estado\Carga Tabela Stage Estado\Stage Estado.Inputs[Entrada de Destino OLE DB].ExternalColumns[Estado]"
+                          lineageId="Package\Tabela Estado\Carga Tabela Stage Estado\Agregação.Outputs[Saída de Agregação 1].Columns[estado]" />
+                        <inputColumn
+                          refId="Package\Tabela Estado\Carga Tabela Stage Estado\Stage Estado.Inputs[Entrada de Destino OLE DB].Columns[populacaoTCU2019]"
+                          cachedDataType="wstr"
+                          cachedLength="255"
+                          cachedName="populacaoTCU2019"
+                          externalMetadataColumnId="Package\Tabela Estado\Carga Tabela Stage Estado\Stage Estado.Inputs[Entrada de Destino OLE DB].ExternalColumns[Populacao]"
+                          lineageId="Package\Tabela Estado\Carga Tabela Stage Estado\Agregação.Outputs[Saída de Agregação 1].Columns[populacaoTCU2019]" />
+                        <inputColumn
+                          refId="Package\Tabela Estado\Carga Tabela Stage Estado\Stage Estado.Inputs[Entrada de Destino OLE DB].Columns[regiao]"
+                          cachedDataType="wstr"
+                          cachedLength="255"
+                          cachedName="regiao"
+                          externalMetadataColumnId="Package\Tabela Estado\Carga Tabela Stage Estado\Stage Estado.Inputs[Entrada de Destino OLE DB].ExternalColumns[Regiao]"
+                          lineageId="Package\Tabela Estado\Carga Tabela Stage Estado\Agregação.Outputs[Saída de Agregação 1].Columns[regiao]" />
+                      </inputColumns>
+                      <externalMetadataColumns
+                        isUsed="True">
+                        <externalMetadataColumn
+                          refId="Package\Tabela Estado\Carga Tabela Stage Estado\Stage Estado.Inputs[Entrada de Destino OLE DB].ExternalColumns[IDEstado]"
+                          dataType="i4"
+                          name="IDEstado" />
+                        <externalMetadataColumn
+                          refId="Package\Tabela Estado\Carga Tabela Stage Estado\Stage Estado.Inputs[Entrada de Destino OLE DB].ExternalColumns[Estado]"
+                          dataType="wstr"
+                          length="2"
+                          name="Estado" />
+                        <externalMetadataColumn
+                          refId="Package\Tabela Estado\Carga Tabela Stage Estado\Stage Estado.Inputs[Entrada de Destino OLE DB].ExternalColumns[Populacao]"
+                          dataType="i4"
+                          name="Populacao" />
+                        <externalMetadataColumn
+                          refId="Package\Tabela Estado\Carga Tabela Stage Estado\Stage Estado.Inputs[Entrada de Destino OLE DB].ExternalColumns[Regiao]"
+                          dataType="wstr"
+                          length="15"
+                          name="Regiao" />
+                      </externalMetadataColumns>
+                    </input>
+                  </inputs>
+                  <outputs>
+                    <output
+                      refId="Package\Tabela Estado\Carga Tabela Stage Estado\Stage Estado.Outputs[Saída de Erro de Destino OLE DB]"
+                      exclusionGroup="1"
+                      isErrorOut="true"
+                      name="Saída de Erro de Destino OLE DB"
+                      synchronousInputId="Package\Tabela Estado\Carga Tabela Stage Estado\Stage Estado.Inputs[Entrada de Destino OLE DB]">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\Tabela Estado\Carga Tabela Stage Estado\Stage Estado.Outputs[Saída de Erro de Destino OLE DB].Columns[ErrorCode]"
+                          dataType="i4"
+                          lineageId="Package\Tabela Estado\Carga Tabela Stage Estado\Stage Estado.Outputs[Saída de Erro de Destino OLE DB].Columns[ErrorCode]"
+                          name="ErrorCode"
+                          specialFlags="1" />
+                        <outputColumn
+                          refId="Package\Tabela Estado\Carga Tabela Stage Estado\Stage Estado.Outputs[Saída de Erro de Destino OLE DB].Columns[ErrorColumn]"
+                          dataType="i4"
+                          lineageId="Package\Tabela Estado\Carga Tabela Stage Estado\Stage Estado.Outputs[Saída de Erro de Destino OLE DB].Columns[ErrorColumn]"
+                          name="ErrorColumn"
+                          specialFlags="2" />
+                      </outputColumns>
+                      <externalMetadataColumns />
+                    </output>
+                  </outputs>
+                </component>
+              </components>
+              <paths>
+                <path
+                  refId="Package\Tabela Estado\Carga Tabela Stage Estado.Paths[Saída de Agregação 1]"
+                  endId="Package\Tabela Estado\Carga Tabela Stage Estado\Stage Estado.Inputs[Entrada de Destino OLE DB]"
+                  name="Saída de Agregação 1"
+                  startId="Package\Tabela Estado\Carga Tabela Stage Estado\Agregação.Outputs[Saída de Agregação 1]" />
+                <path
+                  refId="Package\Tabela Estado\Carga Tabela Stage Estado.Paths[Saída de Origem do Excel]"
+                  endId="Package\Tabela Estado\Carga Tabela Stage Estado\Agregação.Inputs[Entrada de Agregação 1]"
+                  name="Saída de Origem do Excel"
+                  startId="Package\Tabela Estado\Carga Tabela Stage Estado\COVID19BR.Outputs[Saída de Origem do Excel]" />
+              </paths>
+            </pipeline>
+          </DTS:ObjectData>
+        </DTS:Executable>
+      </DTS:Executables>
+      <DTS:PrecedenceConstraints>
+        <DTS:PrecedenceConstraint
+          DTS:refId="Package\Tabela Estado.PrecedenceConstraints[Restrição]"
+          DTS:CreationName=""
+          DTS:DTSID="{2779AB65-48E4-452A-860F-37F7E315406C}"
+          DTS:From="Package\Tabela Estado\Carga Tabela Stage Estado"
+          DTS:LogicalAnd="True"
+          DTS:ObjectName="Restrição"
+          DTS:To="Package\Tabela Estado\Carga Tabela Dimensao Estado" />
+      </DTS:PrecedenceConstraints>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Truncate Table"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Tarefa Executar SQL"
+      DTS:DTSID="{D1B2BFA6-EDA1-480B-928D-53B607B13345}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Truncate Table"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2019; © 2019 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{C04BDECC-6CF8-46CE-BB23-D9D8A000D69C}"
+          SQLTask:SqlStatementSource="truncate table [Stage].[Estado]" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Restrição]"
+      DTS:CreationName=""
+      DTS:DTSID="{D4BA975D-6A20-46A5-B14B-D7D327806921}"
+      DTS:From="Package\Truncate Table"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Restrição"
+      DTS:To="Package\Tabela Estado" />
+  </DTS:PrecedenceConstraints>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--Esta seção CDATA contém as informações de layout do pacote. A seção inclui informações como coordenadas (x,y), largura e altura.-->
+<!--Se você editar manualmente esta seção e cometer algum erro, poderá excluí-la. -->
+<!--O pacote ainda poderá ser carregado normalmente, mas as informações de layout anteriores serão perdidas e o designer reorganizará automaticamente os elementos na superfície de design.-->
+<Objects
+  Version="8">
+  <!--Cada nó abaixo conterá propriedades que não afetam o comportamento em tempo de execução.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="224.8,41.6"
+          Id="Package\Tabela Estado\Carga Tabela Dimensao Estado"
+          TopLeft="46.2666620307502,148.053336182064" />
+        <NodeLayout
+          Size="205.6,41.6"
+          Id="Package\Tabela Estado\Carga Tabela Stage Estado"
+          TopLeft="51.7972741427685,25.0012343744208" />
+        <EdgeLayout
+          Id="Package\Tabela Estado.PrecedenceConstraints[Restrição]"
+          TopLeft="156.631968086759,66.6012343744208">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,81.4521018076432"
+              Start="0,0"
+              End="0,73.9521018076432">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,73.9521018076432" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <ContainerLayout
+          HeaderHeight="43"
+          IsExpanded="True"
+          PanelSize="316.8,248.8"
+          Size="316.8,292"
+          Id="Package\Tabela Estado"
+          TopLeft="23.5238059129304,97.505098391206" />
+        <NodeLayout
+          Size="151.2,41.6"
+          Id="Package\Truncate Table"
+          TopLeft="99.8095162752812,14.1725488812829" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Restrição]"
+          TopLeft="178.666661094105,55.7725488812829">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,41.7325495099231"
+              Start="0,0"
+              End="0,34.2325495099231">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,34.2325495099231" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+  <TaskHost
+    design-time-name="Package\Tabela Estado\Carga Tabela Dimensao Estado">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="140,41.6"
+          Id="Package\Tabela Estado\Carga Tabela Dimensao Estado\Stage Estado"
+          TopLeft="68.8,70.4" />
+        <NodeLayout
+          Size="160.8,41.6"
+          Id="Package\Tabela Estado\Carga Tabela Dimensao Estado\Dimensao Estado"
+          TopLeft="307.657144063833,66.0705882867727" />
+        <EdgeLayout
+          Id="Package\Tabela Estado\Carga Tabela Dimensao Estado.Paths[Saída de Origem OLE DB]"
+          TopLeft="208.8,89.0352941433864">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="98.857144063833,0"
+              Start="0,0"
+              End="91.357144063833,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="91.357144063833,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\Tabela Estado\Carga Tabela Dimensao Estado\Dimensao Estado">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Tabela Estado\Carga Tabela Dimensao Estado\Stage Estado">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <TaskHost
+    design-time-name="Package\Tabela Estado\Carga Tabela Stage Estado">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="140,41.6"
+          Id="Package\Tabela Estado\Carga Tabela Stage Estado\Stage Estado"
+          TopLeft="463.619021447068,64.8596084450748" />
+        <NodeLayout
+          Size="128,41.6"
+          Id="Package\Tabela Estado\Carga Tabela Stage Estado\Agregação"
+          TopLeft="278.571415490846,63.7772554438399" />
+        <NodeLayout
+          Size="137.6,41.6"
+          Id="Package\Tabela Estado\Carga Tabela Stage Estado\COVID19BR"
+          TopLeft="56.6666644149358,65.1733338512845" />
+        <EdgeLayout
+          Id="Package\Tabela Estado\Carga Tabela Stage Estado.Paths[Saída de Origem do Excel]"
+          TopLeft="194.266664414936,85.2752946475622">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="84.3047510759102,0"
+              Start="0,0"
+              End="76.8047510759102,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="76.8047510759102,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Tabela Estado\Carga Tabela Stage Estado.Paths[Saída de Agregação 1]"
+          TopLeft="406.571415490846,85.1184319444573">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="57.047605956222,0"
+              Start="0,0"
+              End="49.547605956222,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="49.547605956222,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\Tabela Estado\Carga Tabela Stage Estado\Stage Estado">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Tabela Estado\Carga Tabela Stage Estado\COVID19BR">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>

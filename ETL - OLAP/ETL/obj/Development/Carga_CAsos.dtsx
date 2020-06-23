@@ -1,0 +1,1195 @@
+<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="5/20/2020 3:19:15 PM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="LUIZ"
+  DTS:CreatorName="LUIZ\Luiz Fernando"
+  DTS:DTSID="{6072EF7F-DDA6-47B8-9633-C4B1CBECC20C}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="15.0.2000.121"
+  DTS:LocaleID="1046"
+  DTS:ObjectName="Carga_Casos"
+  DTS:PackageType="5"
+  DTS:VersionBuild="33"
+  DTS:VersionGUID="{602EB0D7-21D2-4C11-9FEE-429BE51AF974}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[Gerenciador de Conexões do Excel]"
+      DTS:CreationName="EXCEL"
+      DTS:DTSID="{67B2AF08-2CB9-4A15-A81F-1D7977C24DD2}"
+      DTS:ObjectName="Gerenciador de Conexões do Excel">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Provider=Microsoft.ACE.OLEDB.12.0;Data Source=C:\corona\COVID19BR.xlsx;Extended Properties=&quot;EXCEL 12.0 XML;HDR=YES&quot;;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables />
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\Tabela Casos"
+      DTS:CreationName="STOCK:SEQUENCE"
+      DTS:Description="Contêiner da Sequência"
+      DTS:DTSID="{2bd5bbe3-e09e-4556-af1e-473b5a8a59b6}"
+      DTS:ExecutableType="STOCK:SEQUENCE"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Tabela Casos">
+      <DTS:Variables />
+      <DTS:Executables>
+        <DTS:Executable
+          DTS:refId="Package\Tabela Casos\Carga Tabela Fato Casos"
+          DTS:CreationName="Microsoft.Pipeline"
+          DTS:Description="Tarefa Fluxo de Dados"
+          DTS:DTSID="{e876e139-5700-4bf2-a9d3-2bafb5290c9c}"
+          DTS:ExecutableType="Microsoft.Pipeline"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="Carga Tabela Fato Casos"
+          DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <pipeline
+              version="1">
+              <components>
+                <component
+                  refId="Package\Tabela Casos\Carga Tabela Fato Casos\Fato Casos"
+                  componentClassID="Microsoft.OLEDBDestination"
+                  contactInfo="Destino OLE DB;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; Todos os Direitos Reservados; http://www.microsoft.com/sql/support;4"
+                  description="Destino OLE DB"
+                  name="Fato Casos"
+                  usesDispositions="true"
+                  version="4">
+                  <properties>
+                    <property
+                      dataType="System.Int32"
+                      description="O tempo em segundos antes que um comando expire. Zero indica uma expiração infinita."
+                      name="CommandTimeout">0</property>
+                    <property
+                      dataType="System.String"
+                      description="Especifica o nome do objeto de banco de dados usado para abrir um conjunto de linhas."
+                      name="OpenRowset">[Fato].[Casos]</property>
+                    <property
+                      dataType="System.String"
+                      description="Especifica a variável que contém o nome do objeto de banco de dados usado para abrir um conjunto de linhas."
+                      name="OpenRowsetVariable"></property>
+                    <property
+                      dataType="System.String"
+                      description="O comando SQL a ser executado."
+                      name="SqlCommand"
+                      UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">SELECT [IDEstado]
+      ,[Estado]
+FROM [DW_COVID].[Dimensao].[Estado]
+where not exists (
+select IDEstado,Estado
+from [DW_COVID].[Stage].[Estado]
+)</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Especifica a página de código de coluna a ser usada quando não há informações de página de código disponíveis a partir da fonte de dados."
+                      name="DefaultCodePage">1252</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Forca o uso do valor da propriedade DefaultCodePage durante a descrição dos dados de caractere."
+                      name="AlwaysUseDefaultCodePage">false</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Especifica o modo usado para acessar o banco de dados."
+                      name="AccessMode"
+                      typeConverter="AccessMode">0</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Indica se os valores fornecidos para colunas de identidade serão copiados no destino. Se false, os valores para colunas de identidade serão gerados automaticamente no destino. Aplicável apenas se o carregamento rápido estiver ativado."
+                      name="FastLoadKeepIdentity">false</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Indica se as colunas que contêm null terão null inserido no destino. Se false, as colunas que contêm null terão seus valores padrão inseridos no destino. Aplicável apenas se o carregamento rápido estiver ativado."
+                      name="FastLoadKeepNulls">false</property>
+                    <property
+                      dataType="System.String"
+                      description="Especifica as opções a serem usadas com o carregamento rápido. Aplicável apenas se o carregamento rápido estiver ativado."
+                      name="FastLoadOptions"></property>
+                    <property
+                      dataType="System.Int32"
+                      description="Especifica quando confirmações são emitidas durante a inserção de dados. Um valor de 0 especifica que uma confirmação será emitida ao final da inserção de dados. Aplicável somente se o carregamento rápido estiver ativado."
+                      name="FastLoadMaxInsertCommitSize">2147483647</property>
+                  </properties>
+                  <connections>
+                    <connection
+                      refId="Package\Tabela Casos\Carga Tabela Fato Casos\Fato Casos.Connections[OleDbConnection]"
+                      connectionManagerID="{C04BDECC-6CF8-46CE-BB23-D9D8A000D69C}:external"
+                      connectionManagerRefId="Project.ConnectionManagers[DW_COVID]"
+                      description="A conexão de tempo de execução OLE DB usada para acessar o banco de dados."
+                      name="OleDbConnection" />
+                  </connections>
+                  <inputs>
+                    <input
+                      refId="Package\Tabela Casos\Carga Tabela Fato Casos\Fato Casos.Inputs[Entrada de Destino OLE DB]"
+                      errorOrTruncationOperation="Inserir"
+                      errorRowDisposition="FailComponent"
+                      hasSideEffects="true"
+                      name="Entrada de Destino OLE DB">
+                      <inputColumns>
+                        <inputColumn
+                          refId="Package\Tabela Casos\Carga Tabela Fato Casos\Fato Casos.Inputs[Entrada de Destino OLE DB].Columns[IDRegiao]"
+                          cachedDataType="i4"
+                          cachedName="IDRegiao"
+                          externalMetadataColumnId="Package\Tabela Casos\Carga Tabela Fato Casos\Fato Casos.Inputs[Entrada de Destino OLE DB].ExternalColumns[IDRegiao]"
+                          lineageId="Package\Tabela Casos\Carga Tabela Fato Casos\Stage Casos.Outputs[Saída de Origem OLE DB].Columns[IDRegiao]" />
+                        <inputColumn
+                          refId="Package\Tabela Casos\Carga Tabela Fato Casos\Fato Casos.Inputs[Entrada de Destino OLE DB].Columns[IDEstado]"
+                          cachedDataType="i4"
+                          cachedName="IDEstado"
+                          externalMetadataColumnId="Package\Tabela Casos\Carga Tabela Fato Casos\Fato Casos.Inputs[Entrada de Destino OLE DB].ExternalColumns[IDEstado]"
+                          lineageId="Package\Tabela Casos\Carga Tabela Fato Casos\Stage Casos.Outputs[Saída de Origem OLE DB].Columns[IDEstado]" />
+                        <inputColumn
+                          refId="Package\Tabela Casos\Carga Tabela Fato Casos\Fato Casos.Inputs[Entrada de Destino OLE DB].Columns[IDMunicipio]"
+                          cachedDataType="i4"
+                          cachedName="IDMunicipio"
+                          externalMetadataColumnId="Package\Tabela Casos\Carga Tabela Fato Casos\Fato Casos.Inputs[Entrada de Destino OLE DB].ExternalColumns[IDMunicipio]"
+                          lineageId="Package\Tabela Casos\Carga Tabela Fato Casos\Stage Casos.Outputs[Saída de Origem OLE DB].Columns[IDMunicipio]" />
+                        <inputColumn
+                          refId="Package\Tabela Casos\Carga Tabela Fato Casos\Fato Casos.Inputs[Entrada de Destino OLE DB].Columns[CasosConfirmados]"
+                          cachedDataType="i4"
+                          cachedName="CasosConfirmados"
+                          externalMetadataColumnId="Package\Tabela Casos\Carga Tabela Fato Casos\Fato Casos.Inputs[Entrada de Destino OLE DB].ExternalColumns[Casos_Confirmados]"
+                          lineageId="Package\Tabela Casos\Carga Tabela Fato Casos\Stage Casos.Outputs[Saída de Origem OLE DB].Columns[CasosConfirmados]" />
+                        <inputColumn
+                          refId="Package\Tabela Casos\Carga Tabela Fato Casos\Fato Casos.Inputs[Entrada de Destino OLE DB].Columns[Mortes]"
+                          cachedDataType="i4"
+                          cachedName="Mortes"
+                          externalMetadataColumnId="Package\Tabela Casos\Carga Tabela Fato Casos\Fato Casos.Inputs[Entrada de Destino OLE DB].ExternalColumns[Mortes]"
+                          lineageId="Package\Tabela Casos\Carga Tabela Fato Casos\Stage Casos.Outputs[Saída de Origem OLE DB].Columns[Mortes]" />
+                        <inputColumn
+                          refId="Package\Tabela Casos\Carga Tabela Fato Casos\Fato Casos.Inputs[Entrada de Destino OLE DB].Columns[Recuperados]"
+                          cachedDataType="i4"
+                          cachedName="Recuperados"
+                          externalMetadataColumnId="Package\Tabela Casos\Carga Tabela Fato Casos\Fato Casos.Inputs[Entrada de Destino OLE DB].ExternalColumns[Recuperados]"
+                          lineageId="Package\Tabela Casos\Carga Tabela Fato Casos\Stage Casos.Outputs[Saída de Origem OLE DB].Columns[Recuperados]" />
+                        <inputColumn
+                          refId="Package\Tabela Casos\Carga Tabela Fato Casos\Fato Casos.Inputs[Entrada de Destino OLE DB].Columns[Data]"
+                          cachedDataType="dbDate"
+                          cachedName="Data"
+                          externalMetadataColumnId="Package\Tabela Casos\Carga Tabela Fato Casos\Fato Casos.Inputs[Entrada de Destino OLE DB].ExternalColumns[Data]"
+                          lineageId="Package\Tabela Casos\Carga Tabela Fato Casos\Stage Casos.Outputs[Saída de Origem OLE DB].Columns[Data]" />
+                      </inputColumns>
+                      <externalMetadataColumns
+                        isUsed="True">
+                        <externalMetadataColumn
+                          refId="Package\Tabela Casos\Carga Tabela Fato Casos\Fato Casos.Inputs[Entrada de Destino OLE DB].ExternalColumns[IDRegiao]"
+                          dataType="i4"
+                          name="IDRegiao" />
+                        <externalMetadataColumn
+                          refId="Package\Tabela Casos\Carga Tabela Fato Casos\Fato Casos.Inputs[Entrada de Destino OLE DB].ExternalColumns[IDEstado]"
+                          dataType="i4"
+                          name="IDEstado" />
+                        <externalMetadataColumn
+                          refId="Package\Tabela Casos\Carga Tabela Fato Casos\Fato Casos.Inputs[Entrada de Destino OLE DB].ExternalColumns[IDMunicipio]"
+                          dataType="i4"
+                          name="IDMunicipio" />
+                        <externalMetadataColumn
+                          refId="Package\Tabela Casos\Carga Tabela Fato Casos\Fato Casos.Inputs[Entrada de Destino OLE DB].ExternalColumns[Casos_Confirmados]"
+                          dataType="i4"
+                          name="Casos_Confirmados" />
+                        <externalMetadataColumn
+                          refId="Package\Tabela Casos\Carga Tabela Fato Casos\Fato Casos.Inputs[Entrada de Destino OLE DB].ExternalColumns[Mortes]"
+                          dataType="i4"
+                          name="Mortes" />
+                        <externalMetadataColumn
+                          refId="Package\Tabela Casos\Carga Tabela Fato Casos\Fato Casos.Inputs[Entrada de Destino OLE DB].ExternalColumns[Recuperados]"
+                          dataType="i4"
+                          name="Recuperados" />
+                        <externalMetadataColumn
+                          refId="Package\Tabela Casos\Carga Tabela Fato Casos\Fato Casos.Inputs[Entrada de Destino OLE DB].ExternalColumns[Data]"
+                          dataType="dbDate"
+                          name="Data" />
+                      </externalMetadataColumns>
+                    </input>
+                  </inputs>
+                  <outputs>
+                    <output
+                      refId="Package\Tabela Casos\Carga Tabela Fato Casos\Fato Casos.Outputs[Saída de Erro de Destino OLE DB]"
+                      exclusionGroup="1"
+                      isErrorOut="true"
+                      name="Saída de Erro de Destino OLE DB"
+                      synchronousInputId="Package\Tabela Casos\Carga Tabela Fato Casos\Fato Casos.Inputs[Entrada de Destino OLE DB]">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\Tabela Casos\Carga Tabela Fato Casos\Fato Casos.Outputs[Saída de Erro de Destino OLE DB].Columns[ErrorCode]"
+                          dataType="i4"
+                          lineageId="Package\Tabela Casos\Carga Tabela Fato Casos\Fato Casos.Outputs[Saída de Erro de Destino OLE DB].Columns[ErrorCode]"
+                          name="ErrorCode"
+                          specialFlags="1" />
+                        <outputColumn
+                          refId="Package\Tabela Casos\Carga Tabela Fato Casos\Fato Casos.Outputs[Saída de Erro de Destino OLE DB].Columns[ErrorColumn]"
+                          dataType="i4"
+                          lineageId="Package\Tabela Casos\Carga Tabela Fato Casos\Fato Casos.Outputs[Saída de Erro de Destino OLE DB].Columns[ErrorColumn]"
+                          name="ErrorColumn"
+                          specialFlags="2" />
+                      </outputColumns>
+                      <externalMetadataColumns />
+                    </output>
+                  </outputs>
+                </component>
+                <component
+                  refId="Package\Tabela Casos\Carga Tabela Fato Casos\Stage Casos"
+                  componentClassID="Microsoft.OLEDBSource"
+                  contactInfo="Origem OLE DB;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; Todos os Direitos Reservados; http://www.microsoft.com/sql/support;7"
+                  description="Origem OLE DB"
+                  name="Stage Casos"
+                  usesDispositions="true"
+                  version="7">
+                  <properties>
+                    <property
+                      dataType="System.Int32"
+                      description="O tempo em segundos antes que um comando expire. Zero indica uma expiração infinita."
+                      name="CommandTimeout">0</property>
+                    <property
+                      dataType="System.String"
+                      description="Especifica o nome do objeto de banco de dados usado para abrir um conjunto de linhas."
+                      name="OpenRowset">[Stage].[Estado]</property>
+                    <property
+                      dataType="System.String"
+                      description="Especifica a variável que contém o nome do objeto de banco de dados usado para abrir um conjunto de linhas."
+                      name="OpenRowsetVariable"></property>
+                    <property
+                      dataType="System.String"
+                      description="O comando SQL a ser executado."
+                      name="SqlCommand"
+                      UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">SELECT [IDEstado]
+      ,[IDMunicipio]
+      ,[IDRegiao]
+      ,ISNULL([CasosConfirmados],0) as CasosConfirmados
+      ,ISNULL([Mortes],0) as Mortes
+      ,ISNULL([Recuperados],0) as Recuperados
+      ,[Data]
+FROM [DW_COVID].[Stage].[Casos]
+where IDEstado is not null
+and IDmunicipio is not null
+and IDregiao is not null
+and Data not in(
+select data from fato.casos
+)</property>
+                    <property
+                      dataType="System.String"
+                      description="A variável que contém o comando SQL a ser executado."
+                      name="SqlCommandVariable"></property>
+                    <property
+                      dataType="System.Int32"
+                      description="Especifica a página de código de coluna a ser usada quando não há informações de página de código disponíveis a partir da fonte de dados."
+                      name="DefaultCodePage">1252</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Forca o uso do valor da propriedade DefaultCodePage durante a descrição dos dados de caractere."
+                      name="AlwaysUseDefaultCodePage">false</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Especifica o modo usado para acessar o banco de dados."
+                      name="AccessMode"
+                      typeConverter="AccessMode">2</property>
+                    <property
+                      dataType="System.String"
+                      description="Os mapeamentos entre os parâmetros no comando SQL e as variáveis."
+                      name="ParameterMapping"></property>
+                  </properties>
+                  <connections>
+                    <connection
+                      refId="Package\Tabela Casos\Carga Tabela Fato Casos\Stage Casos.Connections[OleDbConnection]"
+                      connectionManagerID="{C04BDECC-6CF8-46CE-BB23-D9D8A000D69C}:external"
+                      connectionManagerRefId="Project.ConnectionManagers[DW_COVID]"
+                      description="A conexão de tempo de execução OLE DB usada para acessar o banco de dados."
+                      name="OleDbConnection" />
+                  </connections>
+                  <outputs>
+                    <output
+                      refId="Package\Tabela Casos\Carga Tabela Fato Casos\Stage Casos.Outputs[Saída de Origem OLE DB]"
+                      name="Saída de Origem OLE DB">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\Tabela Casos\Carga Tabela Fato Casos\Stage Casos.Outputs[Saída de Origem OLE DB].Columns[IDRegiao]"
+                          dataType="i4"
+                          errorOrTruncationOperation="Conversão"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Tabela Casos\Carga Tabela Fato Casos\Stage Casos.Outputs[Saída de Origem OLE DB].ExternalColumns[IDRegiao]"
+                          lineageId="Package\Tabela Casos\Carga Tabela Fato Casos\Stage Casos.Outputs[Saída de Origem OLE DB].Columns[IDRegiao]"
+                          name="IDRegiao"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\Tabela Casos\Carga Tabela Fato Casos\Stage Casos.Outputs[Saída de Origem OLE DB].Columns[IDEstado]"
+                          dataType="i4"
+                          errorOrTruncationOperation="Conversão"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Tabela Casos\Carga Tabela Fato Casos\Stage Casos.Outputs[Saída de Origem OLE DB].ExternalColumns[IDEstado]"
+                          lineageId="Package\Tabela Casos\Carga Tabela Fato Casos\Stage Casos.Outputs[Saída de Origem OLE DB].Columns[IDEstado]"
+                          name="IDEstado"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\Tabela Casos\Carga Tabela Fato Casos\Stage Casos.Outputs[Saída de Origem OLE DB].Columns[IDMunicipio]"
+                          dataType="i4"
+                          errorOrTruncationOperation="Conversão"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Tabela Casos\Carga Tabela Fato Casos\Stage Casos.Outputs[Saída de Origem OLE DB].ExternalColumns[IDMunicipio]"
+                          lineageId="Package\Tabela Casos\Carga Tabela Fato Casos\Stage Casos.Outputs[Saída de Origem OLE DB].Columns[IDMunicipio]"
+                          name="IDMunicipio"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\Tabela Casos\Carga Tabela Fato Casos\Stage Casos.Outputs[Saída de Origem OLE DB].Columns[CasosConfirmados]"
+                          dataType="i4"
+                          errorOrTruncationOperation="Conversão"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Tabela Casos\Carga Tabela Fato Casos\Stage Casos.Outputs[Saída de Origem OLE DB].ExternalColumns[CasosConfirmados]"
+                          lineageId="Package\Tabela Casos\Carga Tabela Fato Casos\Stage Casos.Outputs[Saída de Origem OLE DB].Columns[CasosConfirmados]"
+                          name="CasosConfirmados"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\Tabela Casos\Carga Tabela Fato Casos\Stage Casos.Outputs[Saída de Origem OLE DB].Columns[Mortes]"
+                          dataType="i4"
+                          errorOrTruncationOperation="Conversão"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Tabela Casos\Carga Tabela Fato Casos\Stage Casos.Outputs[Saída de Origem OLE DB].ExternalColumns[Mortes]"
+                          lineageId="Package\Tabela Casos\Carga Tabela Fato Casos\Stage Casos.Outputs[Saída de Origem OLE DB].Columns[Mortes]"
+                          name="Mortes"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\Tabela Casos\Carga Tabela Fato Casos\Stage Casos.Outputs[Saída de Origem OLE DB].Columns[Recuperados]"
+                          dataType="i4"
+                          errorOrTruncationOperation="Conversão"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Tabela Casos\Carga Tabela Fato Casos\Stage Casos.Outputs[Saída de Origem OLE DB].ExternalColumns[Recuperados]"
+                          lineageId="Package\Tabela Casos\Carga Tabela Fato Casos\Stage Casos.Outputs[Saída de Origem OLE DB].Columns[Recuperados]"
+                          name="Recuperados"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\Tabela Casos\Carga Tabela Fato Casos\Stage Casos.Outputs[Saída de Origem OLE DB].Columns[Data]"
+                          dataType="dbDate"
+                          errorOrTruncationOperation="Conversão"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Tabela Casos\Carga Tabela Fato Casos\Stage Casos.Outputs[Saída de Origem OLE DB].ExternalColumns[Data]"
+                          lineageId="Package\Tabela Casos\Carga Tabela Fato Casos\Stage Casos.Outputs[Saída de Origem OLE DB].Columns[Data]"
+                          name="Data"
+                          truncationRowDisposition="FailComponent" />
+                      </outputColumns>
+                      <externalMetadataColumns
+                        isUsed="True">
+                        <externalMetadataColumn
+                          refId="Package\Tabela Casos\Carga Tabela Fato Casos\Stage Casos.Outputs[Saída de Origem OLE DB].ExternalColumns[IDRegiao]"
+                          dataType="i4"
+                          name="IDRegiao" />
+                        <externalMetadataColumn
+                          refId="Package\Tabela Casos\Carga Tabela Fato Casos\Stage Casos.Outputs[Saída de Origem OLE DB].ExternalColumns[IDEstado]"
+                          dataType="i4"
+                          name="IDEstado" />
+                        <externalMetadataColumn
+                          refId="Package\Tabela Casos\Carga Tabela Fato Casos\Stage Casos.Outputs[Saída de Origem OLE DB].ExternalColumns[IDMunicipio]"
+                          dataType="i4"
+                          name="IDMunicipio" />
+                        <externalMetadataColumn
+                          refId="Package\Tabela Casos\Carga Tabela Fato Casos\Stage Casos.Outputs[Saída de Origem OLE DB].ExternalColumns[CasosConfirmados]"
+                          dataType="i4"
+                          name="CasosConfirmados" />
+                        <externalMetadataColumn
+                          refId="Package\Tabela Casos\Carga Tabela Fato Casos\Stage Casos.Outputs[Saída de Origem OLE DB].ExternalColumns[Mortes]"
+                          dataType="i4"
+                          name="Mortes" />
+                        <externalMetadataColumn
+                          refId="Package\Tabela Casos\Carga Tabela Fato Casos\Stage Casos.Outputs[Saída de Origem OLE DB].ExternalColumns[Recuperados]"
+                          dataType="i4"
+                          name="Recuperados" />
+                        <externalMetadataColumn
+                          refId="Package\Tabela Casos\Carga Tabela Fato Casos\Stage Casos.Outputs[Saída de Origem OLE DB].ExternalColumns[Data]"
+                          dataType="dbDate"
+                          name="Data" />
+                      </externalMetadataColumns>
+                    </output>
+                    <output
+                      refId="Package\Tabela Casos\Carga Tabela Fato Casos\Stage Casos.Outputs[Saída de Erro de Origem OLE DB]"
+                      isErrorOut="true"
+                      name="Saída de Erro de Origem OLE DB">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\Tabela Casos\Carga Tabela Fato Casos\Stage Casos.Outputs[Saída de Erro de Origem OLE DB].Columns[IDEstado]"
+                          dataType="i4"
+                          lineageId="Package\Tabela Casos\Carga Tabela Fato Casos\Stage Casos.Outputs[Saída de Erro de Origem OLE DB].Columns[IDEstado]"
+                          name="IDEstado" />
+                        <outputColumn
+                          refId="Package\Tabela Casos\Carga Tabela Fato Casos\Stage Casos.Outputs[Saída de Erro de Origem OLE DB].Columns[IDMunicipio]"
+                          dataType="i4"
+                          lineageId="Package\Tabela Casos\Carga Tabela Fato Casos\Stage Casos.Outputs[Saída de Erro de Origem OLE DB].Columns[IDMunicipio]"
+                          name="IDMunicipio" />
+                        <outputColumn
+                          refId="Package\Tabela Casos\Carga Tabela Fato Casos\Stage Casos.Outputs[Saída de Erro de Origem OLE DB].Columns[IDRegiao]"
+                          dataType="i4"
+                          lineageId="Package\Tabela Casos\Carga Tabela Fato Casos\Stage Casos.Outputs[Saída de Erro de Origem OLE DB].Columns[IDRegiao]"
+                          name="IDRegiao" />
+                        <outputColumn
+                          refId="Package\Tabela Casos\Carga Tabela Fato Casos\Stage Casos.Outputs[Saída de Erro de Origem OLE DB].Columns[CasosConfirmados]"
+                          dataType="i4"
+                          lineageId="Package\Tabela Casos\Carga Tabela Fato Casos\Stage Casos.Outputs[Saída de Erro de Origem OLE DB].Columns[CasosConfirmados]"
+                          name="CasosConfirmados" />
+                        <outputColumn
+                          refId="Package\Tabela Casos\Carga Tabela Fato Casos\Stage Casos.Outputs[Saída de Erro de Origem OLE DB].Columns[Mortes]"
+                          dataType="i4"
+                          lineageId="Package\Tabela Casos\Carga Tabela Fato Casos\Stage Casos.Outputs[Saída de Erro de Origem OLE DB].Columns[Mortes]"
+                          name="Mortes" />
+                        <outputColumn
+                          refId="Package\Tabela Casos\Carga Tabela Fato Casos\Stage Casos.Outputs[Saída de Erro de Origem OLE DB].Columns[Recuperados]"
+                          dataType="i4"
+                          lineageId="Package\Tabela Casos\Carga Tabela Fato Casos\Stage Casos.Outputs[Saída de Erro de Origem OLE DB].Columns[Recuperados]"
+                          name="Recuperados" />
+                        <outputColumn
+                          refId="Package\Tabela Casos\Carga Tabela Fato Casos\Stage Casos.Outputs[Saída de Erro de Origem OLE DB].Columns[Data]"
+                          dataType="dbDate"
+                          lineageId="Package\Tabela Casos\Carga Tabela Fato Casos\Stage Casos.Outputs[Saída de Erro de Origem OLE DB].Columns[Data]"
+                          name="Data" />
+                        <outputColumn
+                          refId="Package\Tabela Casos\Carga Tabela Fato Casos\Stage Casos.Outputs[Saída de Erro de Origem OLE DB].Columns[ErrorCode]"
+                          dataType="i4"
+                          lineageId="Package\Tabela Casos\Carga Tabela Fato Casos\Stage Casos.Outputs[Saída de Erro de Origem OLE DB].Columns[ErrorCode]"
+                          name="ErrorCode"
+                          specialFlags="1" />
+                        <outputColumn
+                          refId="Package\Tabela Casos\Carga Tabela Fato Casos\Stage Casos.Outputs[Saída de Erro de Origem OLE DB].Columns[ErrorColumn]"
+                          dataType="i4"
+                          lineageId="Package\Tabela Casos\Carga Tabela Fato Casos\Stage Casos.Outputs[Saída de Erro de Origem OLE DB].Columns[ErrorColumn]"
+                          name="ErrorColumn"
+                          specialFlags="2" />
+                      </outputColumns>
+                      <externalMetadataColumns />
+                    </output>
+                  </outputs>
+                </component>
+              </components>
+              <paths>
+                <path
+                  refId="Package\Tabela Casos\Carga Tabela Fato Casos.Paths[Saída de Origem OLE DB]"
+                  endId="Package\Tabela Casos\Carga Tabela Fato Casos\Fato Casos.Inputs[Entrada de Destino OLE DB]"
+                  name="Saída de Origem OLE DB"
+                  startId="Package\Tabela Casos\Carga Tabela Fato Casos\Stage Casos.Outputs[Saída de Origem OLE DB]" />
+              </paths>
+            </pipeline>
+          </DTS:ObjectData>
+        </DTS:Executable>
+        <DTS:Executable
+          DTS:refId="Package\Tabela Casos\Carga Tabela Stage Casos"
+          DTS:CreationName="Microsoft.Pipeline"
+          DTS:Description="Tarefa Fluxo de Dados"
+          DTS:DTSID="{a1299674-c0d0-4584-b614-34333997252f}"
+          DTS:ExecutableType="Microsoft.Pipeline"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="Carga Tabela Stage Casos"
+          DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <pipeline
+              version="1">
+              <components>
+                <component
+                  refId="Package\Tabela Casos\Carga Tabela Stage Casos\COVID19BR"
+                  componentClassID="Microsoft.ExcelSource"
+                  contactInfo="Origem do Excel;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; Todos os Direitos Reservados; http://www.microsoft.com/sql/support;1"
+                  description="Origem do Excel"
+                  name="COVID19BR"
+                  usesDispositions="true"
+                  version="1">
+                  <properties>
+                    <property
+                      dataType="System.Int32"
+                      description="O tempo em segundos antes que um comando expire. Zero indica uma expiração infinita."
+                      name="CommandTimeout">0</property>
+                    <property
+                      dataType="System.String"
+                      description="Especifica o nome do objeto de banco de dados usado para abrir um conjunto de linhas."
+                      name="OpenRowset">'Sheet 1$'</property>
+                    <property
+                      dataType="System.String"
+                      description="Especifica a variável que contém o nome do objeto de banco de dados usado para abrir um conjunto de linhas."
+                      name="OpenRowsetVariable"></property>
+                    <property
+                      dataType="System.String"
+                      description="O comando SQL a ser executado."
+                      name="SqlCommand"
+                      UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                    <property
+                      dataType="System.String"
+                      description="A variável que contém o comando SQL a ser executado."
+                      name="SqlCommandVariable"></property>
+                    <property
+                      dataType="System.Int32"
+                      description="Especifica o modo usado para acessar o banco de dados."
+                      name="AccessMode"
+                      typeConverter="AccessMode">0</property>
+                    <property
+                      dataType="System.String"
+                      description="O mapeamento de parâmetros no comando SQL para variáveis."
+                      name="ParameterMapping"></property>
+                  </properties>
+                  <connections>
+                    <connection
+                      refId="Package\Tabela Casos\Carga Tabela Stage Casos\COVID19BR.Connections[OleDbConnection]"
+                      connectionManagerID="Package.ConnectionManagers[Gerenciador de Conexões do Excel]"
+                      connectionManagerRefId="Package.ConnectionManagers[Gerenciador de Conexões do Excel]"
+                      description="A conexão de tempo de execução OLE DB usada para acessar o banco de dados."
+                      name="OleDbConnection" />
+                  </connections>
+                  <outputs>
+                    <output
+                      refId="Package\Tabela Casos\Carga Tabela Stage Casos\COVID19BR.Outputs[Saída de Origem do Excel]"
+                      name="Saída de Origem do Excel">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\Tabela Casos\Carga Tabela Stage Casos\COVID19BR.Outputs[Saída de Origem do Excel].Columns[coduf]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="Conversão"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Tabela Casos\Carga Tabela Stage Casos\COVID19BR.Outputs[Saída de Origem do Excel].ExternalColumns[coduf]"
+                          length="255"
+                          lineageId="Package\Tabela Casos\Carga Tabela Stage Casos\COVID19BR.Outputs[Saída de Origem do Excel].Columns[coduf]"
+                          name="coduf"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\Tabela Casos\Carga Tabela Stage Casos\COVID19BR.Outputs[Saída de Origem do Excel].Columns[codmun]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="Conversão"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Tabela Casos\Carga Tabela Stage Casos\COVID19BR.Outputs[Saída de Origem do Excel].ExternalColumns[codmun]"
+                          length="255"
+                          lineageId="Package\Tabela Casos\Carga Tabela Stage Casos\COVID19BR.Outputs[Saída de Origem do Excel].Columns[codmun]"
+                          name="codmun"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\Tabela Casos\Carga Tabela Stage Casos\COVID19BR.Outputs[Saída de Origem do Excel].Columns[codRegiaoSaude]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="Conversão"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Tabela Casos\Carga Tabela Stage Casos\COVID19BR.Outputs[Saída de Origem do Excel].ExternalColumns[codRegiaoSaude]"
+                          length="255"
+                          lineageId="Package\Tabela Casos\Carga Tabela Stage Casos\COVID19BR.Outputs[Saída de Origem do Excel].Columns[codRegiaoSaude]"
+                          name="codRegiaoSaude"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\Tabela Casos\Carga Tabela Stage Casos\COVID19BR.Outputs[Saída de Origem do Excel].Columns[data]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="Conversão"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Tabela Casos\Carga Tabela Stage Casos\COVID19BR.Outputs[Saída de Origem do Excel].ExternalColumns[data]"
+                          length="255"
+                          lineageId="Package\Tabela Casos\Carga Tabela Stage Casos\COVID19BR.Outputs[Saída de Origem do Excel].Columns[data]"
+                          name="data"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\Tabela Casos\Carga Tabela Stage Casos\COVID19BR.Outputs[Saída de Origem do Excel].Columns[casosAcumulado]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="Conversão"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Tabela Casos\Carga Tabela Stage Casos\COVID19BR.Outputs[Saída de Origem do Excel].ExternalColumns[casosAcumulado]"
+                          length="255"
+                          lineageId="Package\Tabela Casos\Carga Tabela Stage Casos\COVID19BR.Outputs[Saída de Origem do Excel].Columns[casosAcumulado]"
+                          name="casosAcumulado"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\Tabela Casos\Carga Tabela Stage Casos\COVID19BR.Outputs[Saída de Origem do Excel].Columns[obitosAcumulado]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="Conversão"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Tabela Casos\Carga Tabela Stage Casos\COVID19BR.Outputs[Saída de Origem do Excel].ExternalColumns[obitosAcumulado]"
+                          length="255"
+                          lineageId="Package\Tabela Casos\Carga Tabela Stage Casos\COVID19BR.Outputs[Saída de Origem do Excel].Columns[obitosAcumulado]"
+                          name="obitosAcumulado"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\Tabela Casos\Carga Tabela Stage Casos\COVID19BR.Outputs[Saída de Origem do Excel].Columns[Recuperadosnovos]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="Conversão"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Tabela Casos\Carga Tabela Stage Casos\COVID19BR.Outputs[Saída de Origem do Excel].ExternalColumns[Recuperadosnovos]"
+                          length="255"
+                          lineageId="Package\Tabela Casos\Carga Tabela Stage Casos\COVID19BR.Outputs[Saída de Origem do Excel].Columns[Recuperadosnovos]"
+                          name="Recuperadosnovos"
+                          truncationRowDisposition="FailComponent" />
+                      </outputColumns>
+                      <externalMetadataColumns
+                        isUsed="True">
+                        <externalMetadataColumn
+                          refId="Package\Tabela Casos\Carga Tabela Stage Casos\COVID19BR.Outputs[Saída de Origem do Excel].ExternalColumns[regiao]"
+                          dataType="wstr"
+                          length="255"
+                          name="regiao" />
+                        <externalMetadataColumn
+                          refId="Package\Tabela Casos\Carga Tabela Stage Casos\COVID19BR.Outputs[Saída de Origem do Excel].ExternalColumns[estado]"
+                          dataType="wstr"
+                          length="255"
+                          name="estado" />
+                        <externalMetadataColumn
+                          refId="Package\Tabela Casos\Carga Tabela Stage Casos\COVID19BR.Outputs[Saída de Origem do Excel].ExternalColumns[municipio]"
+                          dataType="wstr"
+                          length="255"
+                          name="municipio" />
+                        <externalMetadataColumn
+                          refId="Package\Tabela Casos\Carga Tabela Stage Casos\COVID19BR.Outputs[Saída de Origem do Excel].ExternalColumns[coduf]"
+                          dataType="wstr"
+                          length="255"
+                          name="coduf" />
+                        <externalMetadataColumn
+                          refId="Package\Tabela Casos\Carga Tabela Stage Casos\COVID19BR.Outputs[Saída de Origem do Excel].ExternalColumns[codmun]"
+                          dataType="wstr"
+                          length="255"
+                          name="codmun" />
+                        <externalMetadataColumn
+                          refId="Package\Tabela Casos\Carga Tabela Stage Casos\COVID19BR.Outputs[Saída de Origem do Excel].ExternalColumns[codRegiaoSaude]"
+                          dataType="wstr"
+                          length="255"
+                          name="codRegiaoSaude" />
+                        <externalMetadataColumn
+                          refId="Package\Tabela Casos\Carga Tabela Stage Casos\COVID19BR.Outputs[Saída de Origem do Excel].ExternalColumns[nomeRegiaoSaude]"
+                          dataType="wstr"
+                          length="255"
+                          name="nomeRegiaoSaude" />
+                        <externalMetadataColumn
+                          refId="Package\Tabela Casos\Carga Tabela Stage Casos\COVID19BR.Outputs[Saída de Origem do Excel].ExternalColumns[data]"
+                          dataType="wstr"
+                          length="255"
+                          name="data" />
+                        <externalMetadataColumn
+                          refId="Package\Tabela Casos\Carga Tabela Stage Casos\COVID19BR.Outputs[Saída de Origem do Excel].ExternalColumns[semanaEpi]"
+                          dataType="wstr"
+                          length="255"
+                          name="semanaEpi" />
+                        <externalMetadataColumn
+                          refId="Package\Tabela Casos\Carga Tabela Stage Casos\COVID19BR.Outputs[Saída de Origem do Excel].ExternalColumns[populacaoTCU2019]"
+                          dataType="wstr"
+                          length="255"
+                          name="populacaoTCU2019" />
+                        <externalMetadataColumn
+                          refId="Package\Tabela Casos\Carga Tabela Stage Casos\COVID19BR.Outputs[Saída de Origem do Excel].ExternalColumns[casosAcumulado]"
+                          dataType="wstr"
+                          length="255"
+                          name="casosAcumulado" />
+                        <externalMetadataColumn
+                          refId="Package\Tabela Casos\Carga Tabela Stage Casos\COVID19BR.Outputs[Saída de Origem do Excel].ExternalColumns[obitosAcumulado]"
+                          dataType="wstr"
+                          length="255"
+                          name="obitosAcumulado" />
+                        <externalMetadataColumn
+                          refId="Package\Tabela Casos\Carga Tabela Stage Casos\COVID19BR.Outputs[Saída de Origem do Excel].ExternalColumns[Recuperadosnovos]"
+                          dataType="wstr"
+                          length="255"
+                          name="Recuperadosnovos" />
+                        <externalMetadataColumn
+                          refId="Package\Tabela Casos\Carga Tabela Stage Casos\COVID19BR.Outputs[Saída de Origem do Excel].ExternalColumns[emAcompanhamentoNovos]"
+                          dataType="wstr"
+                          length="255"
+                          name="emAcompanhamentoNovos" />
+                        <externalMetadataColumn
+                          refId="Package\Tabela Casos\Carga Tabela Stage Casos\COVID19BR.Outputs[Saída de Origem do Excel].ExternalColumns[casosNovos]"
+                          dataType="wstr"
+                          length="255"
+                          name="casosNovos" />
+                        <externalMetadataColumn
+                          refId="Package\Tabela Casos\Carga Tabela Stage Casos\COVID19BR.Outputs[Saída de Origem do Excel].ExternalColumns[obitosNovos]"
+                          dataType="wstr"
+                          length="255"
+                          name="obitosNovos" />
+                      </externalMetadataColumns>
+                    </output>
+                    <output
+                      refId="Package\Tabela Casos\Carga Tabela Stage Casos\COVID19BR.Outputs[Saída de Erro de Origem do Excel]"
+                      isErrorOut="true"
+                      name="Saída de Erro de Origem do Excel">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\Tabela Casos\Carga Tabela Stage Casos\COVID19BR.Outputs[Saída de Erro de Origem do Excel].Columns[ErrorCode]"
+                          dataType="i4"
+                          lineageId="Package\Tabela Casos\Carga Tabela Stage Casos\COVID19BR.Outputs[Saída de Erro de Origem do Excel].Columns[ErrorCode]"
+                          name="ErrorCode"
+                          specialFlags="1" />
+                        <outputColumn
+                          refId="Package\Tabela Casos\Carga Tabela Stage Casos\COVID19BR.Outputs[Saída de Erro de Origem do Excel].Columns[ErrorColumn]"
+                          dataType="i4"
+                          lineageId="Package\Tabela Casos\Carga Tabela Stage Casos\COVID19BR.Outputs[Saída de Erro de Origem do Excel].Columns[ErrorColumn]"
+                          name="ErrorColumn"
+                          specialFlags="2" />
+                        <outputColumn
+                          refId="Package\Tabela Casos\Carga Tabela Stage Casos\COVID19BR.Outputs[Saída de Erro de Origem do Excel].Columns[coduf]"
+                          dataType="wstr"
+                          length="255"
+                          lineageId="Package\Tabela Casos\Carga Tabela Stage Casos\COVID19BR.Outputs[Saída de Erro de Origem do Excel].Columns[coduf]"
+                          name="coduf" />
+                        <outputColumn
+                          refId="Package\Tabela Casos\Carga Tabela Stage Casos\COVID19BR.Outputs[Saída de Erro de Origem do Excel].Columns[codmun]"
+                          dataType="wstr"
+                          length="255"
+                          lineageId="Package\Tabela Casos\Carga Tabela Stage Casos\COVID19BR.Outputs[Saída de Erro de Origem do Excel].Columns[codmun]"
+                          name="codmun" />
+                        <outputColumn
+                          refId="Package\Tabela Casos\Carga Tabela Stage Casos\COVID19BR.Outputs[Saída de Erro de Origem do Excel].Columns[codRegiaoSaude]"
+                          dataType="wstr"
+                          length="255"
+                          lineageId="Package\Tabela Casos\Carga Tabela Stage Casos\COVID19BR.Outputs[Saída de Erro de Origem do Excel].Columns[codRegiaoSaude]"
+                          name="codRegiaoSaude" />
+                        <outputColumn
+                          refId="Package\Tabela Casos\Carga Tabela Stage Casos\COVID19BR.Outputs[Saída de Erro de Origem do Excel].Columns[data]"
+                          dataType="wstr"
+                          length="255"
+                          lineageId="Package\Tabela Casos\Carga Tabela Stage Casos\COVID19BR.Outputs[Saída de Erro de Origem do Excel].Columns[data]"
+                          name="data" />
+                        <outputColumn
+                          refId="Package\Tabela Casos\Carga Tabela Stage Casos\COVID19BR.Outputs[Saída de Erro de Origem do Excel].Columns[casosAcumulado]"
+                          dataType="wstr"
+                          length="255"
+                          lineageId="Package\Tabela Casos\Carga Tabela Stage Casos\COVID19BR.Outputs[Saída de Erro de Origem do Excel].Columns[casosAcumulado]"
+                          name="casosAcumulado" />
+                        <outputColumn
+                          refId="Package\Tabela Casos\Carga Tabela Stage Casos\COVID19BR.Outputs[Saída de Erro de Origem do Excel].Columns[obitosAcumulado]"
+                          dataType="wstr"
+                          length="255"
+                          lineageId="Package\Tabela Casos\Carga Tabela Stage Casos\COVID19BR.Outputs[Saída de Erro de Origem do Excel].Columns[obitosAcumulado]"
+                          name="obitosAcumulado" />
+                        <outputColumn
+                          refId="Package\Tabela Casos\Carga Tabela Stage Casos\COVID19BR.Outputs[Saída de Erro de Origem do Excel].Columns[Recuperadosnovos]"
+                          dataType="wstr"
+                          length="255"
+                          lineageId="Package\Tabela Casos\Carga Tabela Stage Casos\COVID19BR.Outputs[Saída de Erro de Origem do Excel].Columns[Recuperadosnovos]"
+                          name="Recuperadosnovos" />
+                      </outputColumns>
+                      <externalMetadataColumns />
+                    </output>
+                  </outputs>
+                </component>
+                <component
+                  refId="Package\Tabela Casos\Carga Tabela Stage Casos\Stage Casos"
+                  componentClassID="Microsoft.OLEDBDestination"
+                  contactInfo="Destino OLE DB;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; Todos os Direitos Reservados; http://www.microsoft.com/sql/support;4"
+                  description="Destino OLE DB"
+                  name="Stage Casos"
+                  usesDispositions="true"
+                  version="4">
+                  <properties>
+                    <property
+                      dataType="System.Int32"
+                      description="O tempo em segundos antes que um comando expire. Zero indica uma expiração infinita."
+                      name="CommandTimeout">0</property>
+                    <property
+                      dataType="System.String"
+                      description="Especifica o nome do objeto de banco de dados usado para abrir um conjunto de linhas."
+                      name="OpenRowset">[Stage].[Casos]</property>
+                    <property
+                      dataType="System.String"
+                      description="Especifica a variável que contém o nome do objeto de banco de dados usado para abrir um conjunto de linhas."
+                      name="OpenRowsetVariable"></property>
+                    <property
+                      dataType="System.String"
+                      description="O comando SQL a ser executado."
+                      name="SqlCommand"
+                      UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">SELECT [IDEstado]
+      ,ISNULL([Estado],'BR') as Estado
+  FROM [DW_COVID].[Stage].[Estado]
+where IDEstado is not null</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Especifica a página de código de coluna a ser usada quando não há informações de página de código disponíveis a partir da fonte de dados."
+                      name="DefaultCodePage">1252</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Forca o uso do valor da propriedade DefaultCodePage durante a descrição dos dados de caractere."
+                      name="AlwaysUseDefaultCodePage">false</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Especifica o modo usado para acessar o banco de dados."
+                      name="AccessMode"
+                      typeConverter="AccessMode">0</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Indica se os valores fornecidos para colunas de identidade serão copiados no destino. Se false, os valores para colunas de identidade serão gerados automaticamente no destino. Aplicável apenas se o carregamento rápido estiver ativado."
+                      name="FastLoadKeepIdentity">false</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Indica se as colunas que contêm null terão null inserido no destino. Se false, as colunas que contêm null terão seus valores padrão inseridos no destino. Aplicável apenas se o carregamento rápido estiver ativado."
+                      name="FastLoadKeepNulls">false</property>
+                    <property
+                      dataType="System.String"
+                      description="Especifica as opções a serem usadas com o carregamento rápido. Aplicável apenas se o carregamento rápido estiver ativado."
+                      name="FastLoadOptions">TABLOCK,CHECK_CONSTRAINTS</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Especifica quando confirmações são emitidas durante a inserção de dados. Um valor de 0 especifica que uma confirmação será emitida ao final da inserção de dados. Aplicável somente se o carregamento rápido estiver ativado."
+                      name="FastLoadMaxInsertCommitSize">2147483647</property>
+                  </properties>
+                  <connections>
+                    <connection
+                      refId="Package\Tabela Casos\Carga Tabela Stage Casos\Stage Casos.Connections[OleDbConnection]"
+                      connectionManagerID="{C04BDECC-6CF8-46CE-BB23-D9D8A000D69C}:external"
+                      connectionManagerRefId="Project.ConnectionManagers[DW_COVID]"
+                      description="A conexão de tempo de execução OLE DB usada para acessar o banco de dados."
+                      name="OleDbConnection" />
+                  </connections>
+                  <inputs>
+                    <input
+                      refId="Package\Tabela Casos\Carga Tabela Stage Casos\Stage Casos.Inputs[Entrada de Destino OLE DB]"
+                      errorOrTruncationOperation="Inserir"
+                      errorRowDisposition="FailComponent"
+                      hasSideEffects="true"
+                      name="Entrada de Destino OLE DB">
+                      <inputColumns>
+                        <inputColumn
+                          refId="Package\Tabela Casos\Carga Tabela Stage Casos\Stage Casos.Inputs[Entrada de Destino OLE DB].Columns[codRegiaoSaude]"
+                          cachedDataType="wstr"
+                          cachedLength="255"
+                          cachedName="codRegiaoSaude"
+                          externalMetadataColumnId="Package\Tabela Casos\Carga Tabela Stage Casos\Stage Casos.Inputs[Entrada de Destino OLE DB].ExternalColumns[IDRegiao]"
+                          lineageId="Package\Tabela Casos\Carga Tabela Stage Casos\COVID19BR.Outputs[Saída de Origem do Excel].Columns[codRegiaoSaude]" />
+                        <inputColumn
+                          refId="Package\Tabela Casos\Carga Tabela Stage Casos\Stage Casos.Inputs[Entrada de Destino OLE DB].Columns[codmun]"
+                          cachedDataType="wstr"
+                          cachedLength="255"
+                          cachedName="codmun"
+                          externalMetadataColumnId="Package\Tabela Casos\Carga Tabela Stage Casos\Stage Casos.Inputs[Entrada de Destino OLE DB].ExternalColumns[IDMunicipio]"
+                          lineageId="Package\Tabela Casos\Carga Tabela Stage Casos\COVID19BR.Outputs[Saída de Origem do Excel].Columns[codmun]" />
+                        <inputColumn
+                          refId="Package\Tabela Casos\Carga Tabela Stage Casos\Stage Casos.Inputs[Entrada de Destino OLE DB].Columns[coduf]"
+                          cachedDataType="wstr"
+                          cachedLength="255"
+                          cachedName="coduf"
+                          externalMetadataColumnId="Package\Tabela Casos\Carga Tabela Stage Casos\Stage Casos.Inputs[Entrada de Destino OLE DB].ExternalColumns[IDEstado]"
+                          lineageId="Package\Tabela Casos\Carga Tabela Stage Casos\COVID19BR.Outputs[Saída de Origem do Excel].Columns[coduf]" />
+                        <inputColumn
+                          refId="Package\Tabela Casos\Carga Tabela Stage Casos\Stage Casos.Inputs[Entrada de Destino OLE DB].Columns[data]"
+                          cachedDataType="wstr"
+                          cachedLength="255"
+                          cachedName="data"
+                          externalMetadataColumnId="Package\Tabela Casos\Carga Tabela Stage Casos\Stage Casos.Inputs[Entrada de Destino OLE DB].ExternalColumns[Data]"
+                          lineageId="Package\Tabela Casos\Carga Tabela Stage Casos\COVID19BR.Outputs[Saída de Origem do Excel].Columns[data]" />
+                        <inputColumn
+                          refId="Package\Tabela Casos\Carga Tabela Stage Casos\Stage Casos.Inputs[Entrada de Destino OLE DB].Columns[casosAcumulado]"
+                          cachedDataType="wstr"
+                          cachedLength="255"
+                          cachedName="casosAcumulado"
+                          externalMetadataColumnId="Package\Tabela Casos\Carga Tabela Stage Casos\Stage Casos.Inputs[Entrada de Destino OLE DB].ExternalColumns[CasosConfirmados]"
+                          lineageId="Package\Tabela Casos\Carga Tabela Stage Casos\COVID19BR.Outputs[Saída de Origem do Excel].Columns[casosAcumulado]" />
+                        <inputColumn
+                          refId="Package\Tabela Casos\Carga Tabela Stage Casos\Stage Casos.Inputs[Entrada de Destino OLE DB].Columns[obitosAcumulado]"
+                          cachedDataType="wstr"
+                          cachedLength="255"
+                          cachedName="obitosAcumulado"
+                          externalMetadataColumnId="Package\Tabela Casos\Carga Tabela Stage Casos\Stage Casos.Inputs[Entrada de Destino OLE DB].ExternalColumns[Mortes]"
+                          lineageId="Package\Tabela Casos\Carga Tabela Stage Casos\COVID19BR.Outputs[Saída de Origem do Excel].Columns[obitosAcumulado]" />
+                        <inputColumn
+                          refId="Package\Tabela Casos\Carga Tabela Stage Casos\Stage Casos.Inputs[Entrada de Destino OLE DB].Columns[Recuperadosnovos]"
+                          cachedDataType="wstr"
+                          cachedLength="255"
+                          cachedName="Recuperadosnovos"
+                          externalMetadataColumnId="Package\Tabela Casos\Carga Tabela Stage Casos\Stage Casos.Inputs[Entrada de Destino OLE DB].ExternalColumns[Recuperados]"
+                          lineageId="Package\Tabela Casos\Carga Tabela Stage Casos\COVID19BR.Outputs[Saída de Origem do Excel].Columns[Recuperadosnovos]" />
+                      </inputColumns>
+                      <externalMetadataColumns
+                        isUsed="True">
+                        <externalMetadataColumn
+                          refId="Package\Tabela Casos\Carga Tabela Stage Casos\Stage Casos.Inputs[Entrada de Destino OLE DB].ExternalColumns[IDRegiao]"
+                          dataType="i4"
+                          name="IDRegiao" />
+                        <externalMetadataColumn
+                          refId="Package\Tabela Casos\Carga Tabela Stage Casos\Stage Casos.Inputs[Entrada de Destino OLE DB].ExternalColumns[IDEstado]"
+                          dataType="i4"
+                          name="IDEstado" />
+                        <externalMetadataColumn
+                          refId="Package\Tabela Casos\Carga Tabela Stage Casos\Stage Casos.Inputs[Entrada de Destino OLE DB].ExternalColumns[IDMunicipio]"
+                          dataType="i4"
+                          name="IDMunicipio" />
+                        <externalMetadataColumn
+                          refId="Package\Tabela Casos\Carga Tabela Stage Casos\Stage Casos.Inputs[Entrada de Destino OLE DB].ExternalColumns[CasosConfirmados]"
+                          dataType="i4"
+                          name="CasosConfirmados" />
+                        <externalMetadataColumn
+                          refId="Package\Tabela Casos\Carga Tabela Stage Casos\Stage Casos.Inputs[Entrada de Destino OLE DB].ExternalColumns[Mortes]"
+                          dataType="i4"
+                          name="Mortes" />
+                        <externalMetadataColumn
+                          refId="Package\Tabela Casos\Carga Tabela Stage Casos\Stage Casos.Inputs[Entrada de Destino OLE DB].ExternalColumns[Recuperados]"
+                          dataType="i4"
+                          name="Recuperados" />
+                        <externalMetadataColumn
+                          refId="Package\Tabela Casos\Carga Tabela Stage Casos\Stage Casos.Inputs[Entrada de Destino OLE DB].ExternalColumns[Data]"
+                          dataType="dbDate"
+                          name="Data" />
+                      </externalMetadataColumns>
+                    </input>
+                  </inputs>
+                  <outputs>
+                    <output
+                      refId="Package\Tabela Casos\Carga Tabela Stage Casos\Stage Casos.Outputs[Saída de Erro de Destino OLE DB]"
+                      exclusionGroup="1"
+                      isErrorOut="true"
+                      name="Saída de Erro de Destino OLE DB"
+                      synchronousInputId="Package\Tabela Casos\Carga Tabela Stage Casos\Stage Casos.Inputs[Entrada de Destino OLE DB]">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\Tabela Casos\Carga Tabela Stage Casos\Stage Casos.Outputs[Saída de Erro de Destino OLE DB].Columns[ErrorCode]"
+                          dataType="i4"
+                          lineageId="Package\Tabela Casos\Carga Tabela Stage Casos\Stage Casos.Outputs[Saída de Erro de Destino OLE DB].Columns[ErrorCode]"
+                          name="ErrorCode"
+                          specialFlags="1" />
+                        <outputColumn
+                          refId="Package\Tabela Casos\Carga Tabela Stage Casos\Stage Casos.Outputs[Saída de Erro de Destino OLE DB].Columns[ErrorColumn]"
+                          dataType="i4"
+                          lineageId="Package\Tabela Casos\Carga Tabela Stage Casos\Stage Casos.Outputs[Saída de Erro de Destino OLE DB].Columns[ErrorColumn]"
+                          name="ErrorColumn"
+                          specialFlags="2" />
+                      </outputColumns>
+                      <externalMetadataColumns />
+                    </output>
+                  </outputs>
+                </component>
+              </components>
+              <paths>
+                <path
+                  refId="Package\Tabela Casos\Carga Tabela Stage Casos.Paths[Saída de Origem do Excel]"
+                  endId="Package\Tabela Casos\Carga Tabela Stage Casos\Stage Casos.Inputs[Entrada de Destino OLE DB]"
+                  name="Saída de Origem do Excel"
+                  startId="Package\Tabela Casos\Carga Tabela Stage Casos\COVID19BR.Outputs[Saída de Origem do Excel]" />
+              </paths>
+            </pipeline>
+          </DTS:ObjectData>
+        </DTS:Executable>
+      </DTS:Executables>
+      <DTS:PrecedenceConstraints>
+        <DTS:PrecedenceConstraint
+          DTS:refId="Package\Tabela Casos.PrecedenceConstraints[Restrição]"
+          DTS:CreationName=""
+          DTS:DTSID="{aa75dd29-73aa-43b4-9028-227b9e0abebc}"
+          DTS:From="Package\Tabela Casos\Carga Tabela Stage Casos"
+          DTS:LogicalAnd="True"
+          DTS:ObjectName="Restrição"
+          DTS:To="Package\Tabela Casos\Carga Tabela Fato Casos" />
+      </DTS:PrecedenceConstraints>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Truncate Table"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Tarefa Executar SQL"
+      DTS:DTSID="{B5EA1350-32E5-4384-AC8A-E6733BA24751}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Truncate Table"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2019; © 2019 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{C04BDECC-6CF8-46CE-BB23-D9D8A000D69C}"
+          SQLTask:SqlStatementSource="truncate table stage.casos&#xA;go&#xA;&#xA;truncate table fato.casos" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Restrição]"
+      DTS:CreationName=""
+      DTS:DTSID="{21A8B9C1-4D37-43BA-806A-7D4E023350B5}"
+      DTS:From="Package\Truncate Table"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Restrição"
+      DTS:To="Package\Tabela Casos" />
+  </DTS:PrecedenceConstraints>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--Esta seção CDATA contém as informações de layout do pacote. A seção inclui informações como coordenadas (x,y), largura e altura.-->
+<!--Se você editar manualmente esta seção e cometer algum erro, poderá excluí-la. -->
+<!--O pacote ainda poderá ser carregado normalmente, mas as informações de layout anteriores serão perdidas e o designer reorganizará automaticamente os elementos na superfície de design.-->
+<Objects
+  Version="8">
+  <!--Cada nó abaixo conterá propriedades que não afetam o comportamento em tempo de execução.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="196.8,41.6"
+          Id="Package\Tabela Casos\Carga Tabela Fato Casos"
+          TopLeft="55.4639410989435,160.725605267351" />
+        <NodeLayout
+          Size="200.8,41.6"
+          Id="Package\Tabela Casos\Carga Tabela Stage Casos"
+          TopLeft="50.8380904529643,26.3121587625539" />
+        <EdgeLayout
+          Id="Package\Tabela Casos.PrecedenceConstraints[Restrição]"
+          TopLeft="152.551015775954,67.9121587625539">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,92.8134465047969"
+              Start="0,0"
+              End="0,85.3134465047969">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,85.3134465047969" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <ContainerLayout
+          HeaderHeight="43"
+          IsExpanded="True"
+          PanelSize="310.4,264.8"
+          Size="310.4,308"
+          Id="Package\Tabela Casos"
+          TopLeft="55.3333311345843,85.9733338512845" />
+        <NodeLayout
+          Size="148,41.6"
+          Id="Package\Truncate Table"
+          TopLeft="140.653055596823,1.25266103985767" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Restrição]"
+          TopLeft="212.593193365704,42.8526610398577">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,43.1206728114268"
+              Start="0,0"
+              End="0,35.6206728114268">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,35.6206728114268" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+  <TaskHost
+    design-time-name="Package\Tabela Casos\Carga Tabela Fato Casos">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="137.6,41.6"
+          Id="Package\Tabela Casos\Carga Tabela Fato Casos\Stage Casos"
+          TopLeft="93.82857141884,63.2" />
+        <NodeLayout
+          Size="129.6,41.6"
+          Id="Package\Tabela Casos\Carga Tabela Fato Casos\Fato Casos"
+          TopLeft="400.8,60" />
+        <EdgeLayout
+          Id="Package\Tabela Casos\Carga Tabela Fato Casos.Paths[Saída de Origem OLE DB]"
+          TopLeft="231.42857141884,82.4">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="169.37142858116,0"
+              Start="0,0"
+              End="161.87142858116,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="161.87142858116,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\Tabela Casos\Carga Tabela Fato Casos\Fato Casos">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Tabela Casos\Carga Tabela Fato Casos\Stage Casos">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <TaskHost
+    design-time-name="Package\Tabela Casos\Carga Tabela Stage Casos">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="134.4,41.6"
+          Id="Package\Tabela Casos\Carga Tabela Stage Casos\COVID19BR"
+          TopLeft="57.3333310551115,65.7850985657466" />
+        <NodeLayout
+          Size="137.6,41.6"
+          Id="Package\Tabela Casos\Carga Tabela Stage Casos\Stage Casos"
+          TopLeft="393.999988885154,69.5372554769006" />
+        <EdgeLayout
+          Id="Package\Tabela Casos\Carga Tabela Stage Casos.Paths[Saída de Origem do Excel]"
+          TopLeft="191.733331055112,88.4611770213236">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="202.266657830042,0"
+              Start="0,0"
+              End="194.766657830042,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="194.766657830042,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\Tabela Casos\Carga Tabela Stage Casos\COVID19BR">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Tabela Casos\Carga Tabela Stage Casos\Stage Casos">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>
